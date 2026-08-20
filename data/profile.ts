@@ -7,6 +7,8 @@ export const navLinks = [
   { label: "Leadership", href: "/#leadership" },
   { label: "Investing", href: "/#investing" },
   { label: "Creative", href: "/#creative" },
+  { label: "Games", href: "/#games" },
+  { label: "Writing", href: "/#writing" },
   { label: "CV", href: "/#cv" },
   { label: "Contact", href: "/#contact" }
 ];

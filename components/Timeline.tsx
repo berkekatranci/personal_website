@@ -2,30 +2,33 @@ import type { CVEntry } from "@/data/cv";
 
 type TimelineProps = {
   entries: CVEntry[];
+  compact?: boolean;
 };
 
-export function Timeline({ entries }: TimelineProps) {
+export function Timeline({ entries, compact = false }: TimelineProps) {
   return (
-    <ol className="relative grid gap-6 border-l border-white/10 pl-6">
+    <ol className="border-b border-white/10">
       {entries.map((entry) => (
-        <li key={`${entry.period}-${entry.title}`} className="relative">
-          <span className="absolute -left-[31px] top-1 grid h-3 w-3 place-items-center rounded-full bg-sky ring-4 ring-ink" />
-          <article className="surface-card p-5">
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
-                <h3 className="text-base font-semibold text-text">
-                  {entry.title}
-                </h3>
-                {entry.organization ? (
-                  <p className="mt-1 text-sm text-sky">{entry.organization}</p>
-                ) : null}
-              </div>
-              <p className="rounded-lg border border-white/10 px-3 py-1 font-mono text-xs text-muted">
-                {entry.period}
+        <li
+          key={`${entry.period}-${entry.title}`}
+          className={`grid border-t border-white/10 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6 ${
+            compact ? "lg:grid-cols-[9rem_1fr]" : "lg:py-6"
+          }`}
+        >
+          <p className="font-mono text-[10px] text-muted">{entry.period}</p>
+          <article className="mt-2 sm:mt-0">
+            <h3 className="text-base font-semibold text-text">{entry.title}</h3>
+            {entry.organization ? (
+              <p
+                className={`mt-1 text-sm ${
+                  entry.type === "education" ? "text-violet" : "text-sky"
+                }`}
+              >
+                {entry.organization}
               </p>
-            </div>
+            ) : null}
             {entry.description ? (
-              <p className="mt-4 text-sm leading-7 text-muted">
+              <p className="mt-3 max-w-3xl text-sm leading-7 text-muted">
                 {entry.description}
               </p>
             ) : null}

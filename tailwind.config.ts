@@ -9,34 +9,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#07111F",
-        night: "#111827",
-        panel: "#182233",
-        sky: "#38BDF8",
-        violet: "#8B5CF6",
-        gold: "#F5C542",
-        mint: "#10B981",
-        text: "#F8FAFC",
-        muted: "#CBD5E1"
+        ink: "#091017",
+        night: "#0D141B",
+        panel: "#121A22",
+        sky: "#69C7D5",
+        violet: "#9587C2",
+        gold: "#D6B66F",
+        mint: "#69B99D",
+        text: "#F2F0EA",
+        muted: "#A9B1B8"
       },
       fontFamily: {
         sans: [
+          "Aptos",
           "Inter",
-          "Sora",
-          "Space Grotesk",
           "ui-sans-serif",
           "system-ui",
           "sans-serif"
         ],
+        display: [
+          "Iowan Old Style",
+          "Baskerville",
+          "Palatino Linotype",
+          "Book Antiqua",
+          "Georgia",
+          "ui-serif",
+          "serif"
+        ],
         mono: ["JetBrains Mono", "SFMono-Regular", "Consolas", "monospace"]
       },
       boxShadow: {
-        glow: "0 0 36px rgba(56, 189, 248, 0.16)",
-        card: "0 18px 60px rgba(0, 0, 0, 0.28)"
+        card: "0 20px 60px rgba(0, 0, 0, 0.18)"
       },
       backgroundImage: {
-        "mesh-dark":
-          "radial-gradient(circle at 18% 18%, rgba(56, 189, 248, 0.16), transparent 30%), radial-gradient(circle at 80% 0%, rgba(139, 92, 246, 0.15), transparent 32%), linear-gradient(180deg, #07111F 0%, #0B1424 44%, #07111F 100%)"
+        "mesh-dark": "linear-gradient(180deg, #0B1219 0%, #0D141B 100%)"
       }
     }
   },

@@ -1,13 +1,11 @@
-import { ExternalLink, Newspaper, PenLine, Video } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { writingItems } from "@/data/writing";
 
-const icons = [PenLine, Video, Newspaper, ExternalLink];
-
 export function WritingMediaSection() {
   return (
-    <section id="writing" className="bg-ink">
+    <section id="writing" className="border-b border-white/10 bg-ink">
       <div className="section-shell">
         <Reveal>
           <SectionHeader
@@ -17,39 +15,52 @@ export function WritingMediaSection() {
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {writingItems.map((item, index) => {
-            const Icon = icons[index % icons.length];
-            const card = (
-              <article className="surface-card h-full p-6 transition hover:-translate-y-1 hover:border-sky/40">
-                <span className="grid h-11 w-11 place-items-center rounded-lg border border-sky/30 bg-sky/10 text-sky">
-                  <Icon aria-hidden size={20} />
-                </span>
-                <p className="mt-5 font-mono text-xs uppercase tracking-[0.16em] text-muted">
-                  {item.type}
-                </p>
-                <h3 className="mt-3 text-lg font-semibold text-text">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-muted">
-                  {item.description}
-                </p>
-              </article>
-            );
+        <Reveal className="mt-14" delay={0.05}>
+          <div className="border-b border-white/10">
+            {writingItems.map((item, index) => {
+              const content = (
+                <>
+                  <span className="font-mono text-[10px] text-slate-500">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-mono text-[10px] uppercase text-sky">
+                    {item.type}
+                  </span>
+                  <span className="col-start-2 sm:col-start-auto">
+                    <h3 className="font-semibold text-text">
+                      {item.title}
+                    </h3>
+                    <span className="mt-2 block max-w-2xl text-sm leading-7 text-muted">
+                      {item.description}
+                    </span>
+                  </span>
+                  <span className="hidden justify-self-end text-muted sm:block">
+                    {item.href ? <ExternalLink aria-hidden size={16} /> : "—"}
+                  </span>
+                </>
+              );
 
-            return (
-              <Reveal key={item.title} delay={index * 0.04}>
-                {item.href ? (
-                  <a href={item.href} className="focus-ring block rounded-lg">
-                    {card}
-                  </a>
-                ) : (
-                  card
-                )}
-              </Reveal>
-            );
-          })}
-        </div>
+              return item.href ? (
+                <a
+                  key={item.title}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="focus-ring grid min-h-24 grid-cols-[2.5rem_1fr] gap-4 border-t border-white/10 py-5 transition-colors hover:bg-white/[0.02] sm:grid-cols-[3rem_7rem_1fr_2rem]"
+                >
+                  {content}
+                </a>
+              ) : (
+                <div
+                  key={item.title}
+                  className="grid min-h-24 grid-cols-[2.5rem_1fr] gap-4 border-t border-white/10 py-5 sm:grid-cols-[3rem_7rem_1fr_2rem]"
+                >
+                  {content}
+                </div>
+              );
+            })}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

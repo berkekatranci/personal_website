@@ -1,7 +1,3 @@
-import { BrainCircuit, Code2, Gem, LineChart, UsersRound } from "lucide-react";
-
-const pillarIcons = [BrainCircuit, Code2, UsersRound, LineChart, Gem];
-
 type ProfilePillarCardProps = {
   title: string;
   description: string;
@@ -13,15 +9,17 @@ export function ProfilePillarCard({
   description,
   index
 }: ProfilePillarCardProps) {
-  const Icon = pillarIcons[index % pillarIcons.length];
-
   return (
-    <article className="surface-card h-full p-6">
-      <span className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 bg-white/5 text-sky">
-        <Icon aria-hidden size={20} />
+    <article className="grid gap-4 border-t border-white/10 py-7 sm:grid-cols-[3rem_1fr]">
+      <span className="font-mono text-[10px] text-slate-500">
+        {String(index + 1).padStart(2, "0")}
       </span>
-      <h3 className="mt-5 text-lg font-semibold text-text">{title}</h3>
-      <p className="mt-4 text-sm leading-7 text-muted">{description}</p>
+      <div>
+        <h3 className="text-lg font-semibold text-text">{title}</h3>
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-muted">
+          {description}
+        </p>
+      </div>
     </article>
   );
 }

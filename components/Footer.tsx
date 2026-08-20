@@ -1,56 +1,51 @@
 import Link from "next/link";
-import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { socials } from "@/data/profile";
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-ink">
-      <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-        <div>
-          <p className="text-sm font-semibold text-text">Berke Katrancı</p>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
+    <footer className="border-t border-white/10 bg-night">
+      <div className="mx-auto grid max-w-[1400px] gap-8 px-5 py-10 sm:px-8 lg:grid-cols-12 lg:px-12">
+        <div className="lg:col-span-6">
+          <p className="font-display text-xl text-text">Berke Katrancı</p>
+          <p className="mt-3 max-w-xl text-sm leading-6 text-muted">
             AI, software, leadership, investing, and creative technology through
             the lens of complex systems.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm lg:col-span-6 lg:justify-end">
           <a
-            aria-label="Email Berke"
             href={`mailto:${socials.email}`}
-            className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 text-muted transition hover:border-sky/50 hover:text-sky"
+            className="focus-ring min-h-11 content-center text-muted transition-colors hover:text-sky"
           >
-            <Mail aria-hidden size={18} />
+            Email
           </a>
           <a
-            aria-label="LinkedIn profile"
             href={socials.linkedin}
-            className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 text-muted transition hover:border-sky/50 hover:text-sky"
+            target="_blank"
+            rel="noreferrer"
+            className="focus-ring min-h-11 content-center text-muted transition-colors hover:text-sky"
           >
-            <Linkedin aria-hidden size={18} />
+            LinkedIn
           </a>
           <a
-            aria-label="Instagram profile"
             href={socials.instagram}
-            className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 text-muted transition hover:border-sky/50 hover:text-sky"
+            target="_blank"
+            rel="noreferrer"
+            className="focus-ring min-h-11 content-center text-muted transition-colors hover:text-sky"
           >
-            <Instagram aria-hidden size={18} />
+            Instagram
           </a>
-          <span
-            aria-label="GitHub placeholder"
-            className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 text-slate-500"
-          >
-            <Github aria-hidden size={18} />
-          </span>
+          <span className="min-h-11 content-center text-slate-600">GitHub</span>
           <Link
             href="/impressum"
-            className="focus-ring rounded-lg px-3 py-2 text-sm text-muted transition hover:bg-white/5 hover:text-text"
+            className="focus-ring min-h-11 content-center text-muted transition-colors hover:text-text"
           >
             Impressum
           </Link>
           <Link
             href="/privacy"
-            className="focus-ring rounded-lg px-3 py-2 text-sm text-muted transition hover:bg-white/5 hover:text-text"
+            className="focus-ring min-h-11 content-center text-muted transition-colors hover:text-text"
           >
             Privacy
           </Link>

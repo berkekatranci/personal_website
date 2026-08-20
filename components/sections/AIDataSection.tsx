@@ -1,4 +1,3 @@
-import { BarChart3, BrainCircuit, Database, LineChart, Microscope, Wrench } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { SkillBadge } from "@/components/SkillBadge";
@@ -6,33 +5,27 @@ import { SkillBadge } from "@/components/SkillBadge";
 const focusAreas = [
   {
     title: "Machine Learning Projects",
-    text: "Practical model development, data preparation, experimentation, and measurable performance improvement.",
-    icon: BrainCircuit
+    text: "Practical model development, data preparation, experimentation, and measurable performance improvement."
   },
   {
     title: "Deep Learning Experience",
-    text: "Image segmentation competition work with PyTorch, iterative training, benchmarking, and evaluation.",
-    icon: Microscope
+    text: "Image segmentation competition work with PyTorch, iterative training, benchmarking, and evaluation."
   },
   {
     title: "Data Analysis & Visualization",
-    text: "Data cleaning, exploratory analysis, plots, reporting, and readable communication of results.",
-    icon: BarChart3
+    text: "Data cleaning, exploratory analysis, plots, reporting, and readable communication of results."
   },
   {
     title: "Model Evaluation",
-    text: "Accuracy, regression metrics, error analysis, and structured comparison between model iterations.",
-    icon: LineChart
+    text: "Accuracy, regression metrics, error analysis, and structured comparison between model iterations."
   },
   {
     title: "Current Learning Focus",
-    text: "Full AI project lifecycle: problem framing, data quality, model choice, deployment awareness, and iterative improvement.",
-    icon: Database
+    text: "Full AI project lifecycle: problem framing, data quality, model choice, deployment awareness, and iterative improvement."
   },
   {
     title: "Tools & Frameworks",
-    text: "A growing toolkit across Python-based AI, scientific computing, computer vision, and optimization.",
-    icon: Wrench
+    text: "A growing toolkit across Python-based AI, scientific computing, computer vision, and optimization."
   }
 ];
 
@@ -57,7 +50,7 @@ const tools = [
 
 export function AIDataSection() {
   return (
-    <section id="ai-data" className="bg-ink">
+    <section id="ai-data" className="border-b border-white/10 bg-ink">
       <div className="section-shell">
         <Reveal>
           <SectionHeader
@@ -67,33 +60,45 @@ export function AIDataSection() {
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {focusAreas.map((area, index) => {
-            const Icon = area.icon;
-            return (
-              <Reveal key={area.title} delay={index * 0.04}>
-                <article className="surface-card h-full p-6">
-                  <span className="grid h-11 w-11 place-items-center rounded-lg border border-sky/30 bg-sky/10 text-sky">
-                    <Icon aria-hidden size={20} />
+        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-8">
+          <Reveal className="lg:col-span-3">
+            <div className="border-l border-sky/40 pl-5 lg:sticky lg:top-24">
+              <p className="font-mono text-[10px] uppercase text-muted">
+                Working loop / 01—06
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal className="lg:col-span-9" delay={0.05}>
+            <ol className="border-b border-white/10">
+              {focusAreas.map((area, index) => (
+                <li
+                  key={area.title}
+                  className="grid gap-4 border-t border-white/10 py-6 sm:grid-cols-[3rem_0.8fr_1.2fr]"
+                >
+                  <span className="font-mono text-[10px] text-sky">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-5 text-lg font-semibold text-text">
-                    {area.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-muted">{area.text}</p>
-                </article>
-              </Reveal>
-            );
-          })}
+                  <h3 className="font-semibold text-text">{area.title}</h3>
+                  <p className="text-sm leading-7 text-muted">{area.text}</p>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
         </div>
 
-        <div className="mt-10 surface-card p-6">
-          <h3 className="text-lg font-semibold text-text">Tools & Frameworks</h3>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {tools.map((tool) => (
-              <SkillBadge key={tool}>{tool}</SkillBadge>
-            ))}
+        <Reveal className="mt-14" delay={0.06}>
+          <div className="grid gap-5 border-t border-white/10 pt-6 lg:grid-cols-12 lg:gap-8">
+            <h3 className="font-mono text-[10px] uppercase text-text lg:col-span-3">
+              Tools & Frameworks
+            </h3>
+            <div className="flex flex-wrap gap-x-5 gap-y-3 lg:col-span-9">
+              {tools.map((tool) => (
+                <SkillBadge key={tool}>{tool}</SkillBadge>
+              ))}
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

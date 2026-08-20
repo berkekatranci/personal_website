@@ -7,69 +7,68 @@ import { skillGroups } from "@/data/skills";
 
 export function CVSection() {
   return (
-    <section id="cv" className="bg-mesh-dark">
+    <section id="cv" className="border-b border-white/10 bg-night">
       <div className="section-shell">
-        <div className="grid gap-8 lg:max-w-4xl">
+        <Reveal>
+          <SectionHeader
+            eyebrow="CV"
+            title="Education, practical experience, activities, and skills."
+            description="A visual timeline for scanning, followed by grouped skill areas for a more traditional CV view."
+          />
+        </Reveal>
+
+        <div className="mt-14 grid gap-14 lg:grid-cols-2 lg:gap-12">
           <Reveal>
-            <SectionHeader
-              eyebrow="CV"
-              title="Education, practical experience, activities, and skills."
-              description="A visual timeline for scanning, followed by grouped skill areas for a more traditional CV view."
-            />
+            <div>
+              <div className="mb-5 flex items-baseline justify-between border-t border-sky/40 pt-5">
+                <h3 className="display-title text-2xl">Practical Experience</h3>
+                <span className="font-mono text-[10px] text-slate-500">
+                  {String(experience.length).padStart(2, "0")}
+                </span>
+              </div>
+              <Timeline entries={experience} />
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.05}>
+            <div>
+              <div className="mb-5 flex items-baseline justify-between border-t border-violet/40 pt-5">
+                <h3 className="display-title text-2xl">Education</h3>
+                <span className="font-mono text-[10px] text-slate-500">
+                  {String(education.length).padStart(2, "0")}
+                </span>
+              </div>
+              <Timeline entries={education} />
+            </div>
           </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-          <Reveal>
-            <Timeline entries={[...experience, ...education]} />
+        <div className="mt-20 grid gap-12 lg:grid-cols-12 lg:gap-8">
+          <Reveal className="lg:col-span-4">
+            <div className="border-t border-white/10 pt-5 lg:sticky lg:top-24">
+              <h3 className="display-title text-2xl leading-8">
+                Practical Experience and Activities
+              </h3>
+              <p className="mt-3 font-mono text-[10px] text-slate-500">
+                {String(activities.length).padStart(2, "0")} entries
+              </p>
+            </div>
           </Reveal>
+          <Reveal className="lg:col-span-8" delay={0.05}>
+            <Timeline entries={activities} compact />
+          </Reveal>
+        </div>
 
-          <div className="grid gap-8">
-            <Reveal>
-              <div>
-                <h3 className="text-xl font-semibold text-text">
-                  Practical Experience and Activities
-                </h3>
-                <div className="mt-5 grid gap-3">
-                  {activities.map((entry) => (
-                    <article
-                      key={`${entry.period}-${entry.title}`}
-                      className="rounded-lg border border-white/10 bg-panel/70 p-4"
-                    >
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <div>
-                          <h4 className="text-sm font-semibold text-text">
-                            {entry.title}
-                          </h4>
-                          {entry.organization ? (
-                            <p className="mt-1 text-xs text-sky">
-                              {entry.organization}
-                            </p>
-                          ) : null}
-                        </div>
-                        <p className="font-mono text-xs text-muted">
-                          {entry.period}
-                        </p>
-                      </div>
-                      {entry.description ? (
-                        <p className="mt-3 text-sm leading-6 text-muted">
-                          {entry.description}
-                        </p>
-                      ) : null}
-                    </article>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.08}>
-              <div>
-                <h3 className="mb-5 text-xl font-semibold text-text">Skills</h3>
-                <SkillCloud groups={skillGroups} />
-              </div>
-            </Reveal>
+        <Reveal className="mt-20" delay={0.06}>
+          <div className="grid gap-8 lg:grid-cols-12">
+            <h3 className="display-title text-2xl text-text lg:col-span-4">
+              Skills
+            </h3>
+            <div className="lg:col-span-8">
+              <SkillCloud groups={skillGroups} />
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

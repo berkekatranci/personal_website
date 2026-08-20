@@ -5,7 +5,7 @@ import { favoriteGames } from "@/data/games";
 
 export function FavoriteGamesSection() {
   return (
-    <section id="games" className="bg-night">
+    <section id="games" className="border-b border-white/10 bg-night">
       <div className="section-shell">
         <Reveal>
           <SectionHeader
@@ -15,13 +15,17 @@ export function FavoriteGamesSection() {
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {favoriteGames.map((game, index) => (
-            <Reveal key={game.title} delay={index * 0.025}>
-              <GameCard game={game} />
-            </Reveal>
-          ))}
-        </div>
+        <Reveal className="mt-14" delay={0.05}>
+          <GameCard game={favoriteGames[0]} index={0} featured />
+        </Reveal>
+
+        <Reveal className="mt-5" delay={0.06}>
+          <div className="grid gap-5 md:grid-cols-2">
+            {favoriteGames.slice(1).map((game, index) => (
+              <GameCard key={game.title} game={game} index={index + 1} />
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

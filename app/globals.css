@@ -4,8 +4,9 @@
 
 :root {
   color-scheme: dark;
-  --background: #07111f;
-  --foreground: #f8fafc;
+  --background: #091017;
+  --foreground: #f2f0ea;
+  --rule: rgba(242, 240, 234, 0.13);
 }
 
 * {
@@ -14,20 +15,17 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 96px;
+  scroll-padding-top: 76px;
 }
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 34rem),
-    radial-gradient(circle at 80% 10%, rgba(245, 197, 66, 0.08), transparent 26rem),
-    #07111f;
+  min-width: 320px;
+  background: var(--background);
   color: var(--foreground);
   font-family:
+    Aptos,
     Inter,
-    Sora,
-    "Space Grotesk",
     ui-sans-serif,
     system-ui,
     -apple-system,
@@ -37,8 +35,9 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-body::selection {
-  background: rgba(56, 189, 248, 0.32);
+::selection {
+  background: rgba(105, 199, 213, 0.28);
+  color: #ffffff;
 }
 
 a {
@@ -50,6 +49,19 @@ button,
 input,
 textarea {
   font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+main {
+  overflow: clip;
+}
+
+section[id] {
+  scroll-margin-top: 72px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -69,18 +81,32 @@ textarea {
 
 @layer components {
   .section-shell {
-    @apply mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28;
-  }
-
-  .surface-card {
-    @apply rounded-lg border border-white/10 bg-panel/80 shadow-card backdrop-blur;
+    @apply mx-auto w-full max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28;
   }
 
   .eyebrow {
-    @apply font-mono text-xs font-semibold uppercase tracking-[0.18em] text-sky;
+    @apply font-mono text-[11px] font-medium uppercase tracking-normal text-sky;
   }
 
   .focus-ring {
     @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky;
+  }
+
+  .editorial-rule {
+    @apply border-t border-white/10;
+  }
+
+  .display-title {
+    font-family:
+      "Iowan Old Style",
+      Baskerville,
+      "Palatino Linotype",
+      "Book Antiqua",
+      Georgia,
+      ui-serif,
+      serif;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #f2f0ea;
   }
 }

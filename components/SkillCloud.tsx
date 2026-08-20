@@ -7,11 +7,16 @@ type SkillCloudProps = {
 
 export function SkillCloud({ groups }: SkillCloudProps) {
   return (
-    <div className="grid gap-5 md:grid-cols-2">
+    <div className="border-b border-white/10">
       {groups.map((group) => (
-        <article key={group.title} className="surface-card p-5">
-          <h3 className="text-sm font-semibold text-text">{group.title}</h3>
-          <div className="mt-4 flex flex-wrap gap-2">
+        <article
+          key={group.title}
+          className="grid gap-4 border-t border-white/10 py-5 sm:grid-cols-[11rem_1fr]"
+        >
+          <h3 className="font-mono text-[10px] uppercase text-text">
+            {group.title}
+          </h3>
+          <div className="flex flex-wrap gap-x-4 gap-y-2">
             {group.skills.map((skill) => (
               <SkillBadge key={skill}>{skill}</SkillBadge>
             ))}

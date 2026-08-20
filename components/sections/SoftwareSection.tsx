@@ -1,4 +1,3 @@
-import { AppWindow, Braces, Cloud, Code2, Layers3 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { SkillBadge } from "@/components/SkillBadge";
@@ -6,17 +5,14 @@ import { SkillBadge } from "@/components/SkillBadge";
 const groups = [
   {
     title: "Programming Languages",
-    icon: Code2,
     items: ["Java", "Python", "C++", "C#"]
   },
   {
     title: "Databases and Platforms",
-    icon: Cloud,
     items: ["SQL", "MariaDB", "MongoDB", "AWS"]
   },
   {
     title: "Applications and Tools",
-    icon: AppWindow,
     items: [
       "Unity",
       "Android Studio",
@@ -28,7 +24,6 @@ const groups = [
   },
   {
     title: "Engineering Principles",
-    icon: Braces,
     items: [
       "Clean structure",
       "Clear naming",
@@ -39,14 +34,13 @@ const groups = [
   },
   {
     title: "Software Projects",
-    icon: Layers3,
     items: ["Web apps", "Visualizations", "Tools", "Interfaces", "Experiments"]
   }
 ];
 
 export function SoftwareSection() {
   return (
-    <section id="software" className="bg-night">
+    <section id="software" className="border-b border-white/10 bg-night">
       <div className="section-shell">
         <Reveal>
           <SectionHeader
@@ -56,36 +50,36 @@ export function SoftwareSection() {
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {groups.map((group, index) => {
-            const Icon = group.icon;
-            return (
-              <Reveal key={group.title} delay={index * 0.04}>
-                <article className="surface-card h-full p-6">
-                  <span className="grid h-11 w-11 place-items-center rounded-lg border border-violet/30 bg-violet/10 text-violet">
-                    <Icon aria-hidden size={20} />
+        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-8">
+          <Reveal className="lg:col-span-4">
+            <p className="border-l border-violet/50 pl-5 font-display text-2xl leading-8 text-text lg:sticky lg:top-24">
+              I am comfortable learning new technologies when a project requires
+              them, and I value clean structure, clear naming, modularity,
+              documentation, and practical usability.
+            </p>
+          </Reveal>
+
+          <Reveal className="lg:col-span-8" delay={0.05}>
+            <div className="border-b border-white/10">
+              {groups.map((group, index) => (
+                <article
+                  key={group.title}
+                  className="grid gap-4 border-t border-white/10 py-6 sm:grid-cols-[3rem_0.8fr_1.2fr]"
+                >
+                  <span className="font-mono text-[10px] text-violet">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-5 text-lg font-semibold text-text">
-                    {group.title}
-                  </h3>
-                  <div className="mt-5 flex flex-wrap gap-2">
+                  <h3 className="font-semibold text-text">{group.title}</h3>
+                  <div className="flex flex-wrap gap-x-4 gap-y-2">
                     {group.items.map((item) => (
                       <SkillBadge key={item}>{item}</SkillBadge>
                     ))}
                   </div>
                 </article>
-              </Reveal>
-            );
-          })}
+              ))}
+            </div>
+          </Reveal>
         </div>
-
-        <Reveal>
-          <p className="mt-10 max-w-4xl text-base leading-8 text-muted">
-            I am comfortable learning new technologies when a project requires
-            them, and I value clean structure, clear naming, modularity,
-            documentation, and practical usability.
-          </p>
-        </Reveal>
       </div>
     </section>
   );

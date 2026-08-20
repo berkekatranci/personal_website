@@ -1,17 +1,16 @@
-import { CalendarDays, Globe2, Mic2, Network, Presentation, Route, Settings2, UsersRound } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { socials } from "@/data/profile";
 
 const leadershipCards = [
-  { title: "Website development", icon: Globe2 },
-  { title: "Speaker networking", icon: Network },
-  { title: "Event organization", icon: CalendarDays },
-  { title: "Organizational system building", icon: Settings2 },
-  { title: "Public speaking", icon: Mic2 },
-  { title: "Team coordination", icon: UsersRound },
-  { title: "Strategic development", icon: Route },
-  { title: "Presentations", icon: Presentation }
+  "Website development",
+  "Speaker networking",
+  "Event organization",
+  "Organizational system building",
+  "Public speaking",
+  "Team coordination",
+  "Strategic development",
+  "Presentations"
 ];
 
 const otherExperience = [
@@ -26,7 +25,7 @@ const otherExperience = [
 
 export function LeadershipSection() {
   return (
-    <section id="leadership" className="bg-ink">
+    <section id="leadership" className="border-b border-white/10 bg-ink">
       <div className="section-shell">
         <Reveal>
           <SectionHeader
@@ -36,14 +35,27 @@ export function LeadershipSection() {
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          <Reveal>
-            <div className="surface-card p-6">
-              <p className="eyebrow">NovaExchangeWorkshop</p>
-              <h3 className="mt-4 text-2xl font-semibold text-text">
+        <Reveal className="mt-14" delay={0.05}>
+          <article className="grid gap-10 border-t border-gold/40 py-8 lg:grid-cols-12 lg:gap-8 lg:py-10">
+            <div className="lg:col-span-4">
+              <p className="font-mono text-[10px] uppercase text-gold">
+                NovaExchangeWorkshop
+              </p>
+              <h3 className="display-title mt-4 text-3xl leading-tight">
                 1st Chairperson, cofounder, organizer, and system builder.
               </h3>
-              <p className="mt-5 text-sm leading-7 text-muted">
+              <a
+                href={socials.novaExchangeWorkshop}
+                target="_blank"
+                rel="noreferrer"
+                className="focus-ring mt-7 inline-flex min-h-11 items-center border-b border-gold text-sm font-semibold text-text transition-colors hover:text-gold"
+              >
+                Visit new-bs.com
+              </a>
+            </div>
+
+            <div className="lg:col-span-8">
+              <p className="max-w-3xl text-base leading-8 text-muted">
                 Since March 2025, I have served as the 1st Chairperson of
                 NovaExchangeWorkshop, a student association focused on
                 entrepreneurship and investing. I cofounded NEW with seven
@@ -51,49 +63,43 @@ export function LeadershipSection() {
                 organizational systems, events, network expansion, and
                 presentations in front of audiences.
               </p>
-              <a
-                href={socials.novaExchangeWorkshop}
-                className="focus-ring mt-6 inline-flex rounded-lg border border-sky/30 bg-sky/10 px-4 py-2 text-sm font-semibold text-sky transition hover:bg-sky/20"
-              >
-                Visit new-bs.com
-              </a>
-            </div>
-          </Reveal>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {leadershipCards.map((card, index) => {
-              const Icon = card.icon;
-              return (
-                <Reveal key={card.title} delay={index * 0.035}>
-                  <article className="surface-card flex items-center gap-4 p-5">
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-gold/30 bg-gold/10 text-gold">
-                      <Icon aria-hidden size={19} />
+              <div className="mt-8 grid border-b border-white/10 sm:grid-cols-2">
+                {leadershipCards.map((card, index) => (
+                  <div
+                    key={card}
+                    className="grid grid-cols-[2.5rem_1fr] border-t border-white/10 py-4 sm:odd:pr-6 sm:even:border-l sm:even:pl-6"
+                  >
+                    <span className="font-mono text-[10px] text-gold">
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="text-sm font-semibold leading-6 text-text">
-                      {card.title}
-                    </h3>
-                  </article>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
+                    <p className="text-sm font-medium text-text">{card}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+        </Reveal>
 
-        <div className="mt-10 surface-card p-6">
-          <h3 className="text-lg font-semibold text-text">
-            Additional leadership and community signals
-          </h3>
-          <div className="mt-5 grid gap-3 md:grid-cols-2">
-            {otherExperience.map((item) => (
-              <p
-                key={item}
-                className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm leading-6 text-muted"
-              >
-                {item}
-              </p>
-            ))}
+        <Reveal className="mt-16" delay={0.06}>
+          <div className="grid gap-8 lg:grid-cols-12">
+            <h3 className="font-display text-2xl text-text lg:col-span-4">
+              Additional leadership and community signals
+            </h3>
+            <ol className="border-b border-white/10 lg:col-span-8">
+              {otherExperience.map((item, index) => (
+                <li
+                  key={item}
+                  className="grid grid-cols-[3rem_1fr] border-t border-white/10 py-4 text-sm leading-7 text-muted"
+                >
+                  <span className="font-mono text-[10px] text-slate-500">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ol>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
