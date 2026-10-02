@@ -15,7 +15,7 @@ export const favoriteGames: FavoriteGame[] = [
       "Kill everything that moves",
     designLesson:
       "All demons harmed playing this game",
-    backgroundImage: "/images/games/doom-2016-placeholder.jpg",
+    backgroundImage: "/images/games/doom_2016.jpg",
     alt: "Abstract placeholder background for Doom 2016"
   },
   {
@@ -25,7 +25,7 @@ export const favoriteGames: FavoriteGame[] = [
       "Kill everything that moves harder",
     designLesson:
       "Such a chill game, isn't it?",
-    backgroundImage: "/images/games/doom-eternal-placeholder.jpg",
+    backgroundImage: "/images/games/doom_eternal.avif",
     alt: "Abstract placeholder background for Doom Eternal"
   },
   {
@@ -35,7 +35,7 @@ export const favoriteGames: FavoriteGame[] = [
       "This game has more attractive athmosphere than other FPS games, and unfortunaltely still does.",
     designLesson:
       "Scale becomes powerful when environment, sound, pacing, and teamwork support the same emotional goal.",
-    backgroundImage: "/images/games/battlefield-1-placeholder.jpg",
+    backgroundImage: "/images/games/battlefield-1.webp",
     alt: "Abstract placeholder background for Battlefield 1"
   },
   {
@@ -45,7 +45,7 @@ export const favoriteGames: FavoriteGame[] = [
       "I value Half-Life for connecting gameplay, level design, and worldbuilding without constantly interrupting the player.",
     designLesson:
       "Immersion is strongest when storytelling is embedded into the system itself.",
-    backgroundImage: "/images/games/half-life-1-placeholder.jpg",
+    backgroundImage: "/images/games/Half-Life_Cover_Art.jpg",
     alt: "Abstract placeholder background for Half-Life"
   },
   {
@@ -55,7 +55,7 @@ export const favoriteGames: FavoriteGame[] = [
       "I value Half-Life 2 for physics-driven gameplay, environmental storytelling, pacing, and a reactive world.",
     designLesson:
       "Technical innovation becomes memorable when it serves player experience.",
-    backgroundImage: "/images/games/half-life-2-placeholder.jpg",
+    backgroundImage: "/images/games/Half-Life_2_cover.jpg",
     alt: "Abstract placeholder background for Half-Life 2"
   },
   {
@@ -65,7 +65,7 @@ export const favoriteGames: FavoriteGame[] = [
       "I value Portal because it makes me use my brain more than university does",
     designLesson:
       "A simple core mechanic can create deep complexity when designed carefully.",
-    backgroundImage: "/images/games/portal-1-placeholder.jpg",
+    backgroundImage: "/images/games/portal.jpg",
     alt: "Abstract placeholder background for Portal"
   },
   {
@@ -75,7 +75,7 @@ export const favoriteGames: FavoriteGame[] = [
       "I value Portal 2 for expanding a simple idea into a richer system of puzzles, characters, humor, physics, and cooperative problem solving. \nThe cake is a lie",
     designLesson:
       "Expansion works best when new mechanics deepen the original idea instead of diluting it.",
-    backgroundImage: "/images/games/portal-2-placeholder.jpg",
+    backgroundImage: "/images/games/portal2.jpg",
     alt: "Abstract placeholder background for Portal 2"
   },
   {
@@ -85,7 +85,7 @@ export const favoriteGames: FavoriteGame[] = [
       "I value it for world detail, character writing, atmosphere, and the feeling that human behavior, environment, and story belong to one living system.\nI have a goddamn plan -> intensively moving to Tahiti",
     designLesson:
       "Emotional depth emerges when world design and character design support each other.",
-    backgroundImage: "/images/games/rdr2-placeholder.jpg",
+    backgroundImage: "/images/games/rdr2.jpg",
     alt: "Abstract placeholder background for Red Dead Redemption 2"
   },
   {
@@ -95,7 +95,7 @@ export const favoriteGames: FavoriteGame[] = [
       "I value it for writing, quests, worldbuilding, and morally complex decisions that rarely feel purely right or wrong.\nVesemir, look how they massacered mah boi",
     designLesson:
       "Strong narratives often come from trade-offs, consequences, and ambiguity.",
-    backgroundImage: "/images/games/witcher-3-placeholder.jpg",
+    backgroundImage: "/images/games/witcher3.jpg",
     alt: "Abstract placeholder background for The Witcher 3"
   },
   {
@@ -106,7 +106,7 @@ export const favoriteGames: FavoriteGame[] = [
 this game has a soul. No other RPG has beaten this GOAT. The taste still lingers.\nFor Ferelden!",
     designLesson:
       "Good systems give choices meaning by connecting them to identity, consequence, and strategy.",
-    backgroundImage: "/images/games/dragon-age-origins-placeholder.jpg",
+    backgroundImage: "/images/games/Dragon_Age_Origins_cover.png",
     alt: "Abstract placeholder background for Dragon Age: Origins"
   },
   {
@@ -126,7 +126,7 @@ this game has a soul. No other RPG has beaten this GOAT. The taste still lingers
       "I value Undertale because it challenges assumptions about combat, morality, player choice, and emotional consequence in games.\nDon't trust the flower",
     designLesson:
       "Small games can become unforgettable when mechanics and meaning are deeply connected.",
-    backgroundImage: "/images/games/undertale-placeholder.jpg",
+    backgroundImage: "/images/games/undertale.png",
     alt: "Abstract placeholder background for Undertale"
   },
   {
@@ -136,7 +136,7 @@ this game has a soul. No other RPG has beaten this GOAT. The taste still lingers
     "I value Planescape: Torment because it treats role-playing as a philosophical exploration of identity, regret, mortality, and change. Instead of focusing only on combat or power progression, it uses dialogue, memory.\n What can change the nature of a man?\n I still ask myself",
   designLesson:
     "Great RPGs become unforgettable when choices are not only mechanical branches, but reflections of identity, belief, guilt, and transformation.",
-  backgroundImage: "/images/games/planescape-torment-placeholder.jpg",
+  backgroundImage: "/images/games/Planescape-torment-box.jpg",
   alt: "Abstract placeholder background for Planescape: Torment"
 },
 {
@@ -146,7 +146,17 @@ this game has a soul. No other RPG has beaten this GOAT. The taste still lingers
     "I value Fallout: New Vegas because it gives the player meaningful freedom inside a morally complex world. Its faction system, branching quests, dialogue choices, and reputation mechanics create a role-playing experience where decisions feel political, personal, and consequential rather than simply good or evil.",
   designLesson:
     "Great RPG design gives players not only choices, but reasons to care about the consequences of those choices.",
-  backgroundImage: "/images/games/fallout-new-vegas-placeholder.jpg",
+  backgroundImage: "/images/games/new vegas.jpg",
+  alt: "Abstract placeholder background for Fallout: New Vegas"
+},
+{
+  title: "Hotline Miami",
+  genre: "Jacket",
+  description:
+    "Such a chill game. \nSo we are doing this ",
+  designLesson:
+    "Sometimes you just need to chill out, and do games of your passion",
+  backgroundImage: "/images/games/hotline miam,.avif",
   alt: "Abstract placeholder background for Fallout: New Vegas"
 }
 ];
