@@ -63,11 +63,11 @@ export function LeadershipSection() {
                 organizational systems, events, network expansion, and
                 presentations in front of audiences.
               </p>
-              <div className="mt-8 grid border-b border-white/10 sm:grid-cols-2">
+              <div className="mt-8 grid border-b border-white/10 md:grid-cols-2">
                 {leadershipCards.map((card, index) => (
                   <div
                     key={card}
-                    className="grid grid-cols-[2.5rem_1fr] border-t border-white/10 py-4 sm:odd:pr-6 sm:even:border-l sm:even:pl-6"
+                    className="text-row grid grid-cols-[2rem_minmax(0,1fr)] border-t border-white/10 py-5 md:odd:pr-5 md:even:border-l md:even:pl-5"
                   >
                     <span className="font-mono text-[10px] text-gold">
                       {String(index + 1).padStart(2, "0")}
@@ -89,7 +89,7 @@ export function LeadershipSection() {
               {otherExperience.map((item, index) => (
                 <li
                   key={item}
-                  className="grid grid-cols-[3rem_1fr] border-t border-white/10 py-4 text-sm leading-7 text-muted"
+                  className="text-row grid grid-cols-[2.5rem_minmax(0,1fr)] border-t border-white/10 py-5 text-base leading-8 text-muted"
                 >
                   <span className="font-mono text-[10px] text-slate-500">
                     {String(index + 1).padStart(2, "0")}

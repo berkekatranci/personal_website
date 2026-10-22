@@ -50,8 +50,8 @@ export function SoftwareSection() {
           />
         </Reveal>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-8">
-          <Reveal className="lg:col-span-4">
+        <div className="mt-14 grid gap-10">
+          <Reveal className="max-w-[60ch]">
             <p className="border-l border-violet/50 pl-5 font-display text-2xl leading-8 text-text lg:sticky lg:top-24">
               I am comfortable learning new technologies when a project requires
               them, and I value clean structure, clear naming, modularity,
@@ -59,14 +59,14 @@ export function SoftwareSection() {
             </p>
           </Reveal>
 
-          <Reveal className="lg:col-span-8" delay={0.05}>
+          <Reveal delay={0.05}>
             <div className="border-b border-white/10">
               {groups.map((group, index) => (
                 <article
                   key={group.title}
-                  className="grid gap-4 border-t border-white/10 py-6 sm:grid-cols-[3rem_0.8fr_1.2fr]"
+                  className="text-row grid gap-3 border-t border-white/10 py-7 sm:grid-cols-[3rem_minmax(0,1fr)] sm:gap-x-5"
                 >
-                  <span className="font-mono text-[10px] text-violet">
+                  <span className="font-mono text-[10px] text-violet sm:row-span-2">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <h3 className="font-semibold text-text">{group.title}</h3>

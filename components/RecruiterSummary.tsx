@@ -5,7 +5,7 @@ export function RecruiterSummary() {
   return (
     <aside className="border-l border-sky/40 pl-6 lg:pl-8">
       <p className="eyebrow">Recruiter Summary</p>
-      <p className="mt-5 font-display text-2xl leading-8 text-text">
+      <p className="mt-5 break-words font-display text-2xl leading-8 text-text">
         Currently: Software / AI Developer at TU Braunschweig HPC as student
         worker · 1st Chairperson of NovaExchangeWorkshop · M.Sc. student at TU
         Braunschweig
@@ -14,7 +14,7 @@ export function RecruiterSummary() {
         {recruiterSummary.map((item, index) => (
           <li
             key={item}
-            className="grid grid-cols-[2rem_1fr] gap-3 border-b border-white/10 py-4 text-sm leading-7 text-muted"
+            className="text-row grid grid-cols-[2rem_minmax(0,1fr)] gap-3 border-b border-white/10 py-5 text-base leading-8 text-muted"
           >
             <span className="font-mono text-[10px] text-mint">
               {String(index + 1).padStart(2, "0")}

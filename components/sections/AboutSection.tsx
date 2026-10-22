@@ -16,11 +16,11 @@ export function AboutSection() {
           />
         </Reveal>
 
-        <div className="mt-14 grid gap-14 lg:grid-cols-12 lg:gap-8">
-          <Reveal className="lg:col-span-5">
+        <div className="mt-14 grid grid-cols-[minmax(0,1fr)] gap-14">
+          <Reveal className="min-w-0 max-w-[65ch]">
             <RecruiterSummary />
           </Reveal>
-          <Reveal className="lg:col-span-7" delay={0.06}>
+          <Reveal delay={0.06}>
             <div className="border-b border-white/10">
               {profilePillars.map((pillar, index) => (
                 <ProfilePillarCard key={pillar.title} {...pillar} index={index} />

@@ -8,46 +8,39 @@ type GameCardProps = {
 };
 
 export function GameCard({ game, index, featured = false }: GameCardProps) {
+  const sizes = featured
+    ? "(min-width: 1024px) 526px, (max-width: 359px) calc(100vw - 40px), calc(100vw - 48px)"
+    : "(min-width: 1008px) 469px, (min-width: 768px) calc((100vw - 68px) / 2), (max-width: 359px) calc(100vw - 40px), calc(100vw - 48px)";
   return (
-    <article
-      className={`group grid h-full overflow-hidden border border-white/10 bg-panel ${
-        featured ? "lg:grid-cols-[1.15fr_0.85fr]" : "grid-rows-[auto_1fr]"
-      }`}
-    >
-      <div
-        className={`relative overflow-hidden bg-night ${
-          featured ? "min-h-72 lg:min-h-[430px]" : "aspect-[16/9]"
-        }`}
-      >
+    <article className={`grid h-full min-w-0 overflow-hidden border border-white/10 bg-panel ${featured ? "lg:grid-cols-[1.1fr_0.9fr]" : "grid-rows-[auto_1fr]"}`}>
+      <div className="relative aspect-[4/3] overflow-hidden bg-night">
+        <Image
+          src={game.backgroundImage}
+          alt=""
+          aria-hidden
+          fill
+          loading="lazy"
+          sizes={sizes}
+          className="scale-[1.2] object-cover brightness-[0.55] blur-xl"
+        />
         <Image
           src={game.backgroundImage}
           alt={game.alt}
           fill
           loading="lazy"
-          sizes={
-            featured
-              ? "(min-width: 1024px) 58vw, 100vw"
-              : "(min-width: 1024px) 42vw, 100vw"
-          }
-          className="object-cover opacity-80 transition duration-500 group-hover:opacity-100"
+          sizes={sizes}
+          className="object-contain"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/10" />
-        <p className="absolute left-5 top-5 font-mono text-[10px] text-white/70">
-          {String(index + 1).padStart(2, "0")}
-        </p>
-        <h3 className="display-title absolute bottom-5 left-5 right-5 text-3xl leading-tight sm:text-4xl">
-          {game.title}
-        </h3>
       </div>
-      <div className="flex flex-col p-5 sm:p-6">
-        <p className="font-mono text-[10px] uppercase leading-5 text-gold">
-          {game.genre}
-        </p>
-        <p className="mt-5 whitespace-pre-line text-sm leading-7 text-muted">
-          {game.description}
-        </p>
+      <div className="flex min-w-0 flex-col p-5 sm:p-6">
+        <div className="flex items-start gap-3">
+          <p className="pt-2 font-mono text-[11px] text-white/60">{String(index + 1).padStart(2, "0")}</p>
+          <h3 className="display-title text-2xl leading-tight sm:text-3xl">{game.title}</h3>
+        </div>
+        <p className="mt-5 font-mono text-[11px] uppercase leading-6 text-gold">{game.genre}</p>
+        <p className="prose-copy mt-5 whitespace-pre-line text-muted">{game.description}</p>
         <div className="mt-auto pt-6">
-          <p className="border-t border-white/10 pt-4 text-sm leading-7 text-slate-300">
+          <p className="prose-copy border-t border-white/10 pt-4 text-slate-300">
             <span className="font-semibold text-text">Design lesson: </span>
             {game.designLesson}
           </p>

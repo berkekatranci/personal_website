@@ -15,7 +15,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 76px;
+  scroll-padding-top: 88px;
 }
 
 body {
@@ -33,6 +33,7 @@ body {
     "Segoe UI",
     sans-serif;
   text-rendering: optimizeLegibility;
+  font-synthesis: none;
 }
 
 ::selection {
@@ -61,7 +62,7 @@ main {
 }
 
 section[id] {
-  scroll-margin-top: 72px;
+  scroll-margin-top: 8px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -72,16 +73,37 @@ section[id] {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+    animation: none !important;
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0s !important;
+  }
+
+  a:hover svg,
+  a:focus-visible svg,
+  .metric-card:hover {
+    transform: none !important;
   }
 }
 
 @layer components {
+  .content-shell {
+    @apply mx-auto w-full max-w-[1008px] px-6;
+  }
+
   .section-shell {
-    @apply mx-auto w-full max-w-[1400px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28;
+    @apply content-shell py-20 lg:py-24;
+  }
+
+  .prose-copy {
+    @apply max-w-[60ch] text-base leading-8;
+  }
+
+  .text-row {
+    @apply transition-colors duration-[170ms] hover:bg-white/[0.025];
+  }
+
+  .link-arrow {
+    @apply shrink-0 transition-transform duration-[170ms] group-hover:translate-x-[3px] group-hover:-translate-y-[3px] group-focus-visible:translate-x-[3px] group-focus-visible:-translate-y-[3px];
   }
 
   .eyebrow {
@@ -98,6 +120,7 @@ section[id] {
 
   .display-title {
     font-family:
+      var(--font-fraunces),
       "Iowan Old Style",
       Baskerville,
       "Palatino Linotype",
@@ -106,7 +129,14 @@ section[id] {
       ui-serif,
       serif;
     font-weight: 400;
+    font-style: normal;
     letter-spacing: 0;
     color: #f2f0ea;
+  }
+}
+
+@media (max-width: 359px) {
+  .content-shell {
+    padding-inline: 20px;
   }
 }

@@ -4,7 +4,7 @@ import { socials } from "@/data/profile";
 export function Footer() {
   return (
     <footer className="border-t border-white/10 bg-night">
-      <div className="mx-auto grid max-w-[1400px] gap-8 px-5 py-10 sm:px-8 lg:grid-cols-12 lg:px-12">
+      <div className="content-shell grid gap-8 py-10 lg:grid-cols-12">
         <div className="lg:col-span-6">
           <p className="font-display text-xl text-text">Berke Katrancı</p>
           <p className="mt-3 max-w-xl text-sm leading-6 text-muted">

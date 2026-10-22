@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { CopyEmailButton } from "@/components/CopyEmailButton";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { socials } from "@/data/profile";
@@ -68,11 +69,12 @@ export function ContactSection() {
                   <ArrowUpRight
                     aria-hidden
                     size={18}
-                    className="text-muted transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-sky"
+                    className="link-arrow text-muted group-hover:text-sky group-focus-visible:text-sky"
                   />
                 </a>
               ))}
             </div>
+            <CopyEmailButton email={socials.email} />
           </Reveal>
         </div>
       </div>

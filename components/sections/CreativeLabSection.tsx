@@ -50,8 +50,8 @@ export function CreativeLabSection() {
           </div>
         </Reveal>
 
-        <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-8">
-          <Reveal className="lg:col-span-4">
+        <div className="mt-16 grid gap-12">
+          <Reveal>
             <div className="grid gap-8 lg:sticky lg:top-24">
               <div className="border-t border-white/10 pt-5">
                 <h3 className="font-mono text-[10px] uppercase text-text">
@@ -76,8 +76,8 @@ export function CreativeLabSection() {
             </div>
           </Reveal>
 
-          <Reveal className="lg:col-span-8" delay={0.05}>
-            <div className="grid gap-5 md:grid-cols-3">
+          <Reveal delay={0.05}>
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {modelGallery.map((model) => (
                 <ThreeDModelCard key={model.title} model={model} />
               ))}

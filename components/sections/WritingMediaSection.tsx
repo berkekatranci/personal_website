@@ -35,7 +35,7 @@ export function WritingMediaSection() {
                     </span>
                   </span>
                   <span className="hidden justify-self-end text-muted sm:block">
-                    {item.href ? <ExternalLink aria-hidden size={16} /> : "—"}
+                    {item.href ? <ExternalLink aria-hidden size={16} className="link-arrow" /> : "—"}
                   </span>
                 </>
               );
@@ -46,7 +46,7 @@ export function WritingMediaSection() {
                   href={item.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="focus-ring grid min-h-24 grid-cols-[2.5rem_1fr] gap-4 border-t border-white/10 py-5 transition-colors hover:bg-white/[0.02] sm:grid-cols-[3rem_7rem_1fr_2rem]"
+                  className="focus-ring group grid min-h-24 grid-cols-[2.5rem_minmax(0,1fr)] gap-4 border-t border-white/10 py-5 transition-colors hover:bg-white/[0.02] sm:grid-cols-[3rem_7rem_minmax(0,1fr)_2rem]"
                 >
                   {content}
                 </a>

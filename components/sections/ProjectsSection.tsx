@@ -16,7 +16,7 @@ const completedArchive = completedProjects.filter(
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="border-b border-white/10 bg-night">
+    <section id="projects" className="border-b border-white/10 bg-night [overflow-anchor:none]">
       <div className="section-shell">
         <Reveal>
           <SectionHeader
@@ -26,7 +26,7 @@ export function ProjectsSection() {
           />
         </Reveal>
 
-        <Reveal className="mt-14" delay={0.05}>
+        <Reveal className="mt-14 space-y-4" delay={0.05}>
           <div className="pb-4">
             <p className="font-mono text-[10px] uppercase text-slate-500 lg:col-span-2">
               Selected work
@@ -37,8 +37,8 @@ export function ProjectsSection() {
           ))}
         </Reveal>
 
-        <div className="mt-20 grid gap-14 lg:grid-cols-12 lg:gap-8">
-          <Reveal className="lg:col-span-4">
+        <div className="mt-20 grid gap-8">
+          <Reveal>
             <div className="border-t border-white/10 pt-6 lg:sticky lg:top-24">
               <p className="eyebrow">Finished (Selected Projects)</p>
               <p className="mt-5 font-display text-5xl text-text">
@@ -50,7 +50,7 @@ export function ProjectsSection() {
               </p>
             </div>
           </Reveal>
-          <Reveal className="lg:col-span-8" delay={0.05}>
+          <Reveal delay={0.05}>
             <ProjectArchive
               projects={completedArchive}
               startIndex={showcaseProjects.length}
@@ -58,8 +58,8 @@ export function ProjectsSection() {
           </Reveal>
         </div>
 
-        <div className="mt-20 grid gap-14 lg:grid-cols-12 lg:gap-8">
-          <Reveal className="lg:col-span-4">
+        <div className="mt-20 grid gap-8">
+          <Reveal>
             <div className="border-t border-gold/40 pt-6 lg:sticky lg:top-24">
               <p className="font-mono text-[10px] uppercase text-gold">
                 In Progress (Selected Projects)
@@ -73,7 +73,7 @@ export function ProjectsSection() {
               </p>
             </div>
           </Reveal>
-          <Reveal className="lg:col-span-8" delay={0.05}>
+          <Reveal delay={0.05}>
             <ProjectArchive
               projects={ongoingProjects}
               startIndex={completedProjects.length}

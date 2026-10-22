@@ -60,8 +60,8 @@ export function AIDataSection() {
           />
         </Reveal>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-8">
-          <Reveal className="lg:col-span-3">
+        <div className="mt-14 grid gap-8">
+          <Reveal>
             <div className="border-l border-sky/40 pl-5 lg:sticky lg:top-24">
               <p className="font-mono text-[10px] uppercase text-muted">
                 Working loop / 01—06
@@ -69,18 +69,18 @@ export function AIDataSection() {
             </div>
           </Reveal>
 
-          <Reveal className="lg:col-span-9" delay={0.05}>
+          <Reveal delay={0.05}>
             <ol className="border-b border-white/10">
               {focusAreas.map((area, index) => (
                 <li
                   key={area.title}
-                  className="grid gap-4 border-t border-white/10 py-6 sm:grid-cols-[3rem_0.8fr_1.2fr]"
+                  className="text-row grid gap-3 border-t border-white/10 py-7 sm:grid-cols-[3rem_minmax(0,1fr)] sm:gap-x-5"
                 >
-                  <span className="font-mono text-[10px] text-sky">
+                  <span className="font-mono text-[10px] text-sky sm:row-span-2">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <h3 className="font-semibold text-text">{area.title}</h3>
-                  <p className="text-sm leading-7 text-muted">{area.text}</p>
+                  <p className="prose-copy text-muted">{area.text}</p>
                 </li>
               ))}
             </ol>

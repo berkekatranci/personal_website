@@ -16,7 +16,7 @@ export const favoriteGames: FavoriteGame[] = [
     designLesson:
       "All demons harmed playing this game",
     backgroundImage: "/images/games/doom_2016.jpg",
-    alt: "Abstract placeholder background for Doom 2016"
+    alt: "Cover artwork for Doom 2016"
   },
   {
     title: "Doom Eternal",
@@ -26,7 +26,7 @@ export const favoriteGames: FavoriteGame[] = [
     designLesson:
       "Such a chill game, isn't it?",
     backgroundImage: "/images/games/doom_eternal.avif",
-    alt: "Abstract placeholder background for Doom Eternal"
+    alt: "Cover artwork for Doom Eternal"
   },
   {
     title: "Battlefield 1",
@@ -36,7 +36,7 @@ export const favoriteGames: FavoriteGame[] = [
     designLesson:
       "Scale becomes powerful when environment, sound, pacing, and teamwork support the same emotional goal.",
     backgroundImage: "/images/games/battlefield-1.webp",
-    alt: "Abstract placeholder background for Battlefield 1"
+    alt: "Cover artwork for Battlefield 1"
   },
   {
     title: "Half-Life",
@@ -46,7 +46,7 @@ export const favoriteGames: FavoriteGame[] = [
     designLesson:
       "Immersion is strongest when storytelling is embedded into the system itself.",
     backgroundImage: "/images/games/Half-Life_Cover_Art.jpg",
-    alt: "Abstract placeholder background for Half-Life"
+    alt: "Cover artwork for Half-Life"
   },
   {
     title: "Half-Life 2",
@@ -56,7 +56,7 @@ export const favoriteGames: FavoriteGame[] = [
     designLesson:
       "Technical innovation becomes memorable when it serves player experience.",
     backgroundImage: "/images/games/Half-Life_2_cover.jpg",
-    alt: "Abstract placeholder background for Half-Life 2"
+    alt: "Cover artwork for Half-Life 2"
   },
   {
     title: "Portal",
@@ -66,7 +66,7 @@ export const favoriteGames: FavoriteGame[] = [
     designLesson:
       "A simple core mechanic can create deep complexity when designed carefully.",
     backgroundImage: "/images/games/portal.jpg",
-    alt: "Abstract placeholder background for Portal"
+    alt: "Cover artwork for Portal"
   },
   {
     title: "Portal 2",
@@ -76,7 +76,7 @@ export const favoriteGames: FavoriteGame[] = [
     designLesson:
       "Expansion works best when new mechanics deepen the original idea instead of diluting it.",
     backgroundImage: "/images/games/portal2.jpg",
-    alt: "Abstract placeholder background for Portal 2"
+    alt: "Cover artwork for Portal 2"
   },
   {
     title: "Red Dead Redemption 2",
@@ -86,7 +86,7 @@ export const favoriteGames: FavoriteGame[] = [
     designLesson:
       "Emotional depth emerges when world design and character design support each other.",
     backgroundImage: "/images/games/rdr2.jpg",
-    alt: "Abstract placeholder background for Red Dead Redemption 2"
+    alt: "Cover artwork for Red Dead Redemption 2"
   },
   {
     title: "The Witcher 3",
@@ -96,7 +96,7 @@ export const favoriteGames: FavoriteGame[] = [
     designLesson:
       "Strong narratives often come from trade-offs, consequences, and ambiguity.",
     backgroundImage: "/images/games/witcher3.jpg",
-    alt: "Abstract placeholder background for The Witcher 3"
+    alt: "Cover artwork for The Witcher 3"
   },
   {
     title: "Dragon Age: Origins",
@@ -107,7 +107,7 @@ this game has a soul. No other RPG has beaten this GOAT. The taste still lingers
     designLesson:
       "Good systems give choices meaning by connecting them to identity, consequence, and strategy.",
     backgroundImage: "/images/games/Dragon_Age_Origins_cover.png",
-    alt: "Abstract placeholder background for Dragon Age: Origins"
+    alt: "Cover artwork for Dragon Age: Origins"
   },
   {
     title: "Baldur's Gate 3",
@@ -116,8 +116,8 @@ this game has a soul. No other RPG has beaten this GOAT. The taste still lingers
       "I value it for freedom, systemic design, character depth, tactical creativity, and the way it rewards experimentation.\nNicer dicer ma bois",
     designLesson:
       "Player freedom becomes powerful when the system can respond meaningfully to unusual ideas.",
-    backgroundImage: "/images/games/bg3-placeholder.jpg",
-    alt: "Abstract placeholder background for Baldur's Gate 3"
+    backgroundImage: "/images/games/bg3.webp",
+    alt: "Cover artwork for Baldur's Gate 3"
   },
   {
     title: "Undertale",
@@ -127,7 +127,7 @@ this game has a soul. No other RPG has beaten this GOAT. The taste still lingers
     designLesson:
       "Small games can become unforgettable when mechanics and meaning are deeply connected.",
     backgroundImage: "/images/games/undertale.png",
-    alt: "Abstract placeholder background for Undertale"
+    alt: "Cover artwork for Undertale"
   },
   {
   title: "Planescape: Torment",
@@ -137,7 +137,7 @@ this game has a soul. No other RPG has beaten this GOAT. The taste still lingers
   designLesson:
     "Great RPGs become unforgettable when choices are not only mechanical branches, but reflections of identity, belief, guilt, and transformation.",
   backgroundImage: "/images/games/Planescape-torment-box.jpg",
-  alt: "Abstract placeholder background for Planescape: Torment"
+  alt: "Cover artwork for Planescape: Torment"
 },
 {
   title: "Fallout: New Vegas",
@@ -147,7 +147,7 @@ this game has a soul. No other RPG has beaten this GOAT. The taste still lingers
   designLesson:
     "Great RPG design gives players not only choices, but reasons to care about the consequences of those choices.",
   backgroundImage: "/images/games/new vegas.jpg",
-  alt: "Abstract placeholder background for Fallout: New Vegas"
+  alt: "Cover artwork for Fallout: New Vegas"
 },
 {
   title: "Hotline Miami",
@@ -157,6 +157,6 @@ this game has a soul. No other RPG has beaten this GOAT. The taste still lingers
   designLesson:
     "Sometimes you just need to chill out, and do games of your passion",
   backgroundImage: "/images/games/hotline miam,.avif",
-  alt: "Abstract placeholder background for Fallout: New Vegas"
+  alt: "Cover artwork for Hotline Miami"
 }
 ];

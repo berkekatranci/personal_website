@@ -1,7 +1,17 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+
+const fraunces = localFont({
+  src: [
+    { path: "./fonts/fraunces-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/fraunces-latin-400-italic.woff2", weight: "400", style: "italic" }
+  ],
+  display: "swap",
+  variable: "--font-fraunces"
+});
 
 const siteUrl = "https://example.com";
 
@@ -62,7 +72,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={fraunces.variable}>
         <Navbar />
         <main id="main-content">{children}</main>
         <Footer />

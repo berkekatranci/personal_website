@@ -16,7 +16,7 @@ export function ProfilePillarCard({
       </span>
       <div>
         <h3 className="text-lg font-semibold text-text">{title}</h3>
-        <p className="mt-3 max-w-3xl text-sm leading-7 text-muted">
+        <p className="prose-copy mt-4 text-muted">
           {description}
         </p>
       </div>

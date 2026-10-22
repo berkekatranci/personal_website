@@ -28,7 +28,7 @@ export function Timeline({ entries, compact = false }: TimelineProps) {
               </p>
             ) : null}
             {entry.description ? (
-              <p className="mt-3 max-w-3xl text-sm leading-7 text-muted">
+              <p className="prose-copy mt-3 text-muted">
                 {entry.description}
               </p>
             ) : null}

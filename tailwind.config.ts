@@ -28,6 +28,7 @@ const config: Config = {
           "sans-serif"
         ],
         display: [
+          "var(--font-fraunces)",
           "Iowan Old Style",
           "Baskerville",
           "Palatino Linotype",

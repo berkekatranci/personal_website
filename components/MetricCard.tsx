@@ -7,7 +7,7 @@ type MetricCardProps = {
 
 export function MetricCard({ label, value, detail, index }: MetricCardProps) {
   return (
-    <article className="relative min-h-36 border-b border-r border-white/10 px-5 py-5 even:border-r-0 lg:min-h-40 lg:border-b-0 lg:border-r lg:px-6 lg:even:border-r lg:last:border-r-0">
+    <article className="metric-card relative min-w-0 border border-white/10 px-5 py-6 transition-transform duration-[170ms] hover:scale-[1.01]">
       <p className="font-mono text-[10px] text-slate-500">
         {String(index + 1).padStart(2, "0")}
       </p>

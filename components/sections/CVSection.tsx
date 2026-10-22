@@ -17,7 +17,7 @@ export function CVSection() {
           />
         </Reveal>
 
-        <div className="mt-14 grid gap-14 lg:grid-cols-2 lg:gap-12">
+        <div className="mt-14 grid gap-14">
           <Reveal>
             <div>
               <div className="mb-5 flex items-baseline justify-between border-t border-sky/40 pt-5">
