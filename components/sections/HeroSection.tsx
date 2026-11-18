@@ -1,17 +1,20 @@
 import Link from "next/link";
 import { ArrowDownRight, Mail } from "lucide-react";
 import { MetricCard } from "@/components/MetricCard";
-import { Reveal } from "@/components/Reveal";
 import { heroMetrics, socials } from "@/data/profile";
 
 export function HeroSection() {
   return (
     <section id="home" className="border-b border-white/10 bg-ink">
       <div className="section-shell pb-14 pt-14 sm:pt-20 lg:pb-16 lg:pt-20">
-        <Reveal>
-          <h1 className="display-title max-w-[18ch] text-[2.5rem] !italic leading-[1.14] sm:text-5xl lg:text-[4rem]">
-            I build intelligent systems with data, code, teams, and strategic thinking.
+        <div>
+          <p className="eyebrow">AI &amp; Machine Learning Portfolio</p>
+          <h1 className="display-title mt-6 max-w-[20ch] text-[2.5rem] leading-[1.14] sm:text-5xl lg:text-[4rem]">
+            Berke Katrancı
           </h1>
+          <p className="prose-copy mt-8 font-display text-2xl leading-relaxed text-text sm:text-3xl">
+            I build intelligent systems with data, code, teams, and strategic thinking.
+          </p>
           <p className="prose-copy mt-8 text-muted sm:text-lg">
             I am an M.Sc. Informatics student at TU Braunschweig focused on
             Artificial Intelligence, Data Science, Software Engineering, and
@@ -52,7 +55,7 @@ export function HeroSection() {
             </a>{" "}
             - M.Sc. student at TU Braunschweig
           </p>
-        </Reveal>
+        </div>
       </div>
       <div className="bg-night">
         <div className="content-shell grid grid-cols-1 gap-4 pb-10 min-[390px]:grid-cols-2 md:grid-cols-3">

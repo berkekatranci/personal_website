@@ -7,16 +7,25 @@ export type WritingItem = {
 
 export const writingItems: WritingItem[] = [
   {
-    title: "Medium Articles",
-    type: "Writing",
+    title: "Machine Learning for Weather Forecasting",
+    type: "Case study",
     description:
-      "Technical and reflective articles about AI, projects, learning, and systems thinking."
+      "From custom weather sensor data to model development, team leadership, and evaluation at TU Braunschweig.",
+    href: "/projects/weather-forecasting"
   },
   {
-    title: "AI & Machine Learning Videos",
-    type: "Media",
+    title: "Lane Detection with OpenCV",
+    type: "Case study",
     description:
-      "Project videos and learning documentation about machine learning experiments."
+      "A computer vision pipeline for road video using edge detection, region-of-interest filtering, and the Hough transform.",
+    href: "/projects/lane-detection"
+  },
+  {
+    title: "Hardware-Aware GPT Quantization",
+    type: "Case study",
+    description:
+      "Simulating quantization and analog noise in GPT-style language models for photonic and electronic neuromorphic systems.",
+    href: "/projects/hardware-aware-gpt"
   },
   {
     title: "LinkedIn Updates",

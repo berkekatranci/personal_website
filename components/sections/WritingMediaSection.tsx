@@ -1,4 +1,5 @@
-import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { writingItems } from "@/data/writing";
@@ -18,6 +19,7 @@ export function WritingMediaSection() {
         <Reveal className="mt-14" delay={0.05}>
           <div className="border-b border-white/10">
             {writingItems.map((item, index) => {
+              const isInternal = item.href?.startsWith("/");
               const content = (
                 <>
                   <span className="font-mono text-[10px] text-slate-500">
@@ -35,12 +37,20 @@ export function WritingMediaSection() {
                     </span>
                   </span>
                   <span className="hidden justify-self-end text-muted sm:block">
-                    {item.href ? <ExternalLink aria-hidden size={16} className="link-arrow" /> : "—"}
+                    {item.href ? (isInternal ? <ArrowUpRight aria-hidden size={16} className="link-arrow" /> : <ExternalLink aria-hidden size={16} className="link-arrow" />) : "—"}
                   </span>
                 </>
               );
 
-              return item.href ? (
+              return item.href && isInternal ? (
+                <Link
+                  key={item.title}
+                  href={item.href}
+                  className="focus-ring group grid min-h-24 grid-cols-[2.5rem_minmax(0,1fr)] gap-4 border-t border-white/10 py-5 transition-colors hover:bg-white/[0.02] sm:grid-cols-[3rem_7rem_minmax(0,1fr)_2rem]"
+                >
+                  {content}
+                </Link>
+              ) : item.href ? (
                 <a
                   key={item.title}
                   href={item.href}

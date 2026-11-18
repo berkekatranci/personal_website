@@ -10,10 +10,20 @@ import { LeadershipSection } from "@/components/sections/LeadershipSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { SoftwareSection } from "@/components/sections/SoftwareSection";
 import { WritingMediaSection } from "@/components/sections/WritingMediaSection";
+import { StructuredData } from "@/components/StructuredData";
+import { createPageMetadata, profilePageSchema } from "@/lib/site";
+
+export const metadata = createPageMetadata({
+  title: "Berke Katrancı (Gariban Adam) | AI & Software Portfolio",
+  description:
+    "Berke Katrancı, also known as Gariban Adam: AI, machine learning and software projects, research and community leadership at TU Braunschweig.",
+  path: "/"
+});
 
 export default function Home() {
   return (
     <>
+      <StructuredData data={profilePageSchema("/")} />
       <HeroSection />
       <AboutSection />
       <ProjectsSection />

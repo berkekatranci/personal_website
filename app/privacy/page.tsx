@@ -1,7 +1,13 @@
 import { SectionHeader } from "@/components/SectionHeader";
+import { createPageMetadata } from "@/lib/site";
 
 export const metadata = {
-  title: "Privacy - Berke Katrancı"
+  ...createPageMetadata({
+    title: "Privacy | Berke Katrancı",
+    description: "Privacy information for Berke Katrancı's personal portfolio.",
+    path: "/privacy"
+  }),
+  robots: { index: false, follow: true }
 };
 
 export default function PrivacyPage() {

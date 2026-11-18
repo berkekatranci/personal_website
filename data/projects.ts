@@ -39,7 +39,7 @@ export const featuredProjects: Project[] = [
     status: "Finished",
     links: [
       { label: "GitHub" },
-      { label: "Article" },
+      { label: "Article", href: "/projects/weather-forecasting" },
       { label: "Video" }
     ]
   },
@@ -95,7 +95,7 @@ export const featuredProjects: Project[] = [
 
   status: "Finished",
 
-  links: [{ label: "Thesis" }]
+  links: [{ label: "Article", href: "/projects/hardware-aware-gpt" }]
 },
 
 {
@@ -159,7 +159,7 @@ export const featuredProjects: Project[] = [
 
   status: "Finished",
 
-  links: [{ label: "Demo" }]
+  links: [{ label: "Article", href: "/projects/lane-detection" }]
 },
 {
   title: "Quick Math Challenge App",
@@ -406,40 +406,7 @@ export const featuredProjects: Project[] = [
   status: "In Progress",
 
   links: [{ label: "Demo" }]
-},
-
-{
-  title: "Advanced Self Driving AI Model",
-  category: "Software Development",
-
-  problem:
-    "Developing data-driven financial tools to support market research, investment analysis, portfolio tracking, and decision-making through automated data collection, analysis, and visualization.",
-
-  role:
-    "Software Developer, Data Analyst",
-
-  techStack: [
-    "Python",
-    "NumPy",
-    "Pandas",
-    "Scikit-learn",
-    "Plotly",
-    "yFinance",
-    "Matplotlib",
-    "Streamlit",
-  ],
-
-  result:
-    "Designed and implemented financial analysis tools that automate data gathering, clean and process market data, visualize price movements and trends, and support faster, more structured investment research. The project reduces manual research workload and improves the efficiency of tracking financial assets and evaluating investment opportunities.",
-
-  status: "In Progress",
-
-  links: [{ label: "Demo" }]
 }
-
-
-
-
 ];
 
 export const completedProjects = featuredProjects.filter(

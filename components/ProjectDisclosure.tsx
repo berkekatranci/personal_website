@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, ExternalLink } from "lucide-react";
 import { useId, useState } from "react";
@@ -93,7 +94,15 @@ export function ProjectDisclosure({ project, index, featured = false, active = f
           {project.links?.length ? (
             <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
               {project.links.map((link, linkIndex) =>
-                !link.label ? null : link.href ? (
+                !link.label ? null : link.href?.startsWith("/") ? (
+                  <Link
+                    key={`${link.label}-${linkIndex}`}
+                    href={link.href}
+                    className="focus-ring inline-flex min-h-11 items-center gap-2 pr-1 text-sm font-semibold text-sky hover:text-text"
+                  >
+                    Read case study
+                  </Link>
+                ) : link.href ? (
                   <a
                     key={`${link.label}-${linkIndex}`}
                     href={link.href}

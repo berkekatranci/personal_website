@@ -1,7 +1,13 @@
 import { SectionHeader } from "@/components/SectionHeader";
+import { createPageMetadata } from "@/lib/site";
 
 export const metadata = {
-  title: "Impressum - Berke Katrancı"
+  ...createPageMetadata({
+    title: "Impressum | Berke Katrancı",
+    description: "Provider information for Berke Katrancı's personal portfolio.",
+    path: "/impressum"
+  }),
+  robots: { index: false, follow: true }
 };
 
 export default function ImpressumPage() {

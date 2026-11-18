@@ -1,7 +1,10 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { ProjectArchive } from "@/components/ProjectArchive";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
+import { caseStudies } from "@/data/case-studies";
 import {
   completedProjects,
   featuredProjects,
@@ -25,6 +28,28 @@ export function ProjectsSection() {
             description="Each project is framed by the problem, my role, the technical stack, and the result. The goal is to make the work easy to scan while still showing the engineering context."
           />
         </Reveal>
+
+        <div className="mt-14 border-t border-white/10 pt-6">
+          <h3 className="font-mono text-[11px] uppercase text-sky">Project case studies</h3>
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
+            Explore the problem, approach, results and limitations behind selected AI and computer vision projects.
+          </p>
+          <div className="mt-7 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+            {caseStudies.map((caseStudy) => (
+              <Link
+                key={caseStudy.slug}
+                href={`/projects/${caseStudy.slug}`}
+                className="focus-ring group flex flex-col items-start border-t border-white/15 py-6 transition-colors hover:bg-white/[0.02]"
+              >
+                <p className="font-mono text-[10px] uppercase leading-5 text-sky">{caseStudy.category}</p>
+                <h4 className="display-title mt-4 text-xl leading-snug sm:text-2xl">{caseStudy.title}</h4>
+                <span className="mt-5 inline-flex items-center gap-3 text-sm font-semibold text-muted group-hover:text-sky">
+                  Read case study <ArrowRight aria-hidden size={16} className="link-arrow" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
 
         <Reveal className="mt-14 space-y-4" delay={0.05}>
           <div className="pb-4">
