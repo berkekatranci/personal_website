@@ -24,8 +24,8 @@ export function ProjectsSection() {
         <Reveal>
           <SectionHeader
             eyebrow="Featured Projects"
-            title="Evidence of building, measuring, improving, and leading."
-            description="Each project is framed by the problem, my role, the technical stack, and the result. The goal is to make the work easy to scan while still showing the engineering context."
+            title="Building, measuring, improving, and leading."
+            description="" //Each project is framed by the problem, my role, the technical stack, and the result. The goal is to make the work easy to scan while still showing the engineering context.
           />
         </Reveal>
 
