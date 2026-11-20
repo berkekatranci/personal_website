@@ -22,6 +22,14 @@ export const socials = {
   novaExchangeWorkshop: "https://new-bs.com"
 };
 
+export const salzgitterInternship = {
+  organization: "Salzgitter AG",
+  title: "Data Engineer & AI Developer Intern",
+  started: "November 2026",
+  description:
+    "Building a Python pipeline to analyze feedback on large language models. The prototype uses NVIDIA HelpSteer2, text embeddings, and topic clustering to group similar requests and examine response quality across topics."
+};
+
 export const heroMetrics = [
   {
     label: "Weather AI accuracy",

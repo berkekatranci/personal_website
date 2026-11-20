@@ -1,7 +1,9 @@
-import Link from "next/link";
 import { ArrowDownRight, Mail } from "lucide-react";
 import { MetricCard } from "@/components/MetricCard";
-import { heroMetrics, socials } from "@/data/profile";
+import { SectionLink } from "@/components/SectionLink";
+import { heroMetrics, salzgitterInternship, socials } from "@/data/profile";
+
+const headlineLines = ["I build intelligent systems", "with data, code, teams,", "and strategic thinking."];
 
 export function HeroSection() {
   return (
@@ -12,8 +14,12 @@ export function HeroSection() {
           <h1 className="display-title mt-6 max-w-[20ch] text-[2.5rem] leading-[1.14] sm:text-5xl lg:text-[4rem]">
             Berke Katrancı
           </h1>
-          <p className="prose-copy mt-8 font-display text-2xl leading-relaxed text-text sm:text-3xl">
-            I build intelligent systems with data, code, teams, and strategic thinking.
+          <p className="mt-8 font-display text-2xl italic leading-snug text-text sm:text-3xl">
+            {headlineLines.map((line, index) => (
+              <span key={line} className="hero-line-mask block pb-1">
+                <span className={`hero-line hero-line-${index + 1} block`}>{line}{index < headlineLines.length - 1 ? " " : ""}</span>
+              </span>
+            ))}
           </p>
           <p className="prose-copy mt-8 text-muted sm:text-lg">
             I am an M.Sc. Informatics student at TU Braunschweig focused on
@@ -22,7 +28,7 @@ export function HeroSection() {
             tools, communities, and long-term strategies.
           </p>
           <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
-            <Link
+            <SectionLink
               href="/#projects"
               className="focus-ring group inline-flex min-h-12 items-center gap-6 border-b border-sky py-3 text-sm font-semibold text-text transition-colors hover:text-sky"
             >
@@ -32,7 +38,7 @@ export function HeroSection() {
                 size={18}
                 className="transition-transform duration-[170ms] group-hover:translate-x-[3px] group-hover:translate-y-[3px] group-focus-visible:translate-x-[3px] group-focus-visible:translate-y-[3px]"
               />
-            </Link>
+            </SectionLink>
             <a
               href={`mailto:${socials.email}`}
               className="focus-ring inline-flex min-h-12 items-center gap-6 border-b border-white/20 py-3 text-sm font-semibold text-muted transition-colors hover:border-sky hover:text-sky"
@@ -45,6 +51,9 @@ export function HeroSection() {
             <span className="mr-2 font-mono text-[11px] uppercase text-sky">
               Currently
             </span>
+            {salzgitterInternship.title} at {salzgitterInternship.organization} since {salzgitterInternship.started}.
+          </p>
+          <p className="prose-copy mt-2 text-muted">
             Software / AI Developer at TU Braunschweig HPC as student worker -
             1st Chairperson of{" "}
             <a

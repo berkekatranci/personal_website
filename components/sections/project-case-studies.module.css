@@ -1,0 +1,28 @@
+.link {
+  transition: background-color 160ms ease-out, border-color 160ms ease-out, transform 160ms ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    background-color: rgba(105, 199, 213, 0.045);
+    border-color: rgba(105, 199, 213, 0.4);
+  }
+}
+
+.link:focus-visible {
+  background-color: rgba(105, 199, 213, 0.045);
+  border-color: rgba(105, 199, 213, 0.4);
+}
+
+.link:active {
+  background-color: rgba(105, 199, 213, 0.12);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @media (hover: hover) and (pointer: fine) {
+    .link:hover { transform: translateY(-2px); }
+  }
+
+  .link:focus-visible { transform: translateY(-2px); }
+  .link:active { transform: translateY(1px) scale(0.99); }
+}

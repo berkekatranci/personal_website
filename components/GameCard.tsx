@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { GameCoverPreview } from "@/components/GameCoverPreview";
 import type { FavoriteGame } from "@/data/games";
 
 type GameCardProps = {
@@ -38,6 +39,7 @@ export function GameCard({ game, index, featured = false }: GameCardProps) {
           <h3 className="display-title text-2xl leading-tight sm:text-3xl">{game.title}</h3>
         </div>
         <p className="mt-5 font-mono text-[11px] uppercase leading-6 text-gold">{game.genre}</p>
+        <GameCoverPreview title={game.title} src={game.backgroundImage} alt={game.alt} />
         <p className="prose-copy mt-5 whitespace-pre-line text-muted">{game.description}</p>
         <div className="mt-auto pt-6">
           <p className="prose-copy border-t border-white/10 pt-4 text-slate-300">

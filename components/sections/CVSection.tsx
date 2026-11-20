@@ -26,7 +26,7 @@ export function CVSection() {
                   {String(experience.length).padStart(2, "0")}
                 </span>
               </div>
-              <Timeline entries={experience} />
+              <Timeline entries={experience} browseYears />
             </div>
           </Reveal>
 

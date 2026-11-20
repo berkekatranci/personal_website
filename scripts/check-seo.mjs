@@ -13,7 +13,15 @@ const indexablePaths = [
 ];
 const legalPaths = ["/privacy", "/impressum"];
 const retiredAliasPaths = ["/gariban-adam", "/garibanadam", "/gariban_adam"];
-const expectedAliases = ["Berke Katranci", "Gariban Adam", "garibanadam", "gariban_adam"];
+// Keep this expectation independent of the application's schema exports.
+const expectedAliases = [
+  "Berke Katranci",
+  "Gariban Adam", "garibanadam", "gariban-adam", "gariban_adam",
+  "Fakir Adam", "fakiradam", "fakir-adam", "fakir_adam",
+  "Fakfakir Adam", "fakfakiradam", "fakfakir-adam", "fakfakir_adam",
+  "Fak Fakir Adam", "fak-fakir-adam", "fak_fakir_adam"
+];
+const primaryAliasFamilies = ["Gariban Adam", "Fakir Adam", "Fakfakir Adam"];
 let checks = 0;
 const failures = [];
 
@@ -104,14 +112,14 @@ function checkVisibleBody(html) {
     .replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, "")
     .replace(/<!--[\s\S]*?-->/g, "");
   const text = decodeHtml(content.replace(/<[^>]*>/g, " "));
-  check(!/\bgariban[\s_-]*adam\b/i.test(text), "visible page text should not contain the SEO-only alias");
+  check(!/\b(?:gariban|fakir|fak[\s_-]*fakir)[\s_-]*adam\b/i.test(text), "visible page text should not contain SEO-only aliases");
   check(
     tags(content, "a").every((tag) => {
       if (!tag.href) return true;
-      const pathname = new URL(tag.href, primaryOrigin).pathname.replace(/\/+$/, "") || "/";
-      return !retiredAliasPaths.includes(pathname);
+      const pathname = decodeURIComponent(new URL(tag.href, primaryOrigin).pathname).replace(/\/+$/, "") || "/";
+      return !/^\/(?:gariban|fakir|fak[\s_-]*fakir)[\s_-]*adam$/i.test(pathname);
     }),
-    "page content should not link to retired alias routes"
+    "page content should not link to SEO-only alias routes"
   );
 }
 
@@ -183,6 +191,16 @@ async function main() {
       const description = single(meta(html, "name", "description"), "expected exactly one description").trim();
       check(title.length > 0 && !titles.has(title), "title must be nonempty and unique");
       check(description.length > 0 && !descriptions.has(description), "description must be nonempty and unique");
+      equal(single(meta(html, "property", "og:title"), "expected one OG title"), title, "OG title should match page title");
+      equal(single(meta(html, "property", "og:description"), "expected one OG description"), description, "OG description should match page description");
+      equal(single(meta(html, "name", "twitter:title"), "expected one Twitter title"), title, "Twitter title should match page title");
+      equal(single(meta(html, "name", "twitter:description"), "expected one Twitter description"), description, "Twitter description should match page description");
+      equal(single(meta(html, "name", "twitter:card"), "expected one Twitter card"), "summary_large_image", "Twitter card type");
+      if (path === "/") {
+        for (const family of primaryAliasFamilies) {
+          check(new RegExp(`\\b${family}\\b`, "i").test(`${title} ${description}`), `homepage metadata should include ${family}`);
+        }
+      }
       titles.add(title);
       descriptions.add(description);
       equal(new URL(canonical(html)).href, new URL(path, primaryOrigin).href, "canonical should identify this primary-domain page");
@@ -199,6 +217,13 @@ async function main() {
         check(imageUrl.pathname.startsWith("/opengraph-image"), "expected generated OG image route");
         imageUrls.add(imageUrl.href);
       }
+      const twitterImages = meta(html, "name", "twitter:image");
+      check(twitterImages.length > 0, "expected Twitter image");
+      for (const image of twitterImages) {
+        const imageUrl = new URL(image);
+        equal(imageUrl.origin, primaryOrigin, "Twitter image must use primary origin");
+        check(images.some((ogImage) => new URL(ogImage).pathname === imageUrl.pathname), "Twitter and OG images should use the same generated image route");
+      }
       const schemas = schemaObjects(html);
       const person = schemas.find((object) => hasType(object, "Person"));
       check(Boolean(person), "expected Person schema");
@@ -207,7 +232,16 @@ async function main() {
         check(person.alternateName?.includes(alias), `Person schema should include ${alias}`);
       }
       const profiles = schemas.filter((object) => hasType(object, "ProfilePage"));
+      const websites = schemas.filter((object) => hasType(object, "WebSite"));
       if (path === "/") {
+        equal(websites.length, 1, "homepage should have one WebSite schema");
+        const website = websites[0];
+        equal(website["@id"], `${primaryOrigin}/#website`, "WebSite identifier");
+        equal(new URL(website.url).href, `${primaryOrigin}/`, "WebSite URL should be the canonical root");
+        equal(website.name, "Berke Katrancı", "WebSite should retain the primary brand name");
+        assert.deepEqual(website.alternateName, ["Gariban Adam"], "WebSite alternate name should identify the established domain nickname only");
+        checks += 1;
+        equal(website.publisher?.["@id"], person["@id"], "WebSite publisher should reference the same Person");
         equal(profiles.length, 1, "homepage should have one ProfilePage schema");
         const profile = profiles[0];
         equal(profile.url, new URL(path, primaryOrigin).href, "ProfilePage should identify this page");
@@ -215,6 +249,7 @@ async function main() {
         equal(profile.inLanguage, "en", "homepage ProfilePage language should be English");
       } else {
         equal(profiles.length, 0, "ProfilePage should only describe the homepage");
+        equal(websites.length, 0, "WebSite schema should only describe the homepage");
       }
     });
   }

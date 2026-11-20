@@ -30,11 +30,32 @@ export const isIndexableDeployment =
   process.env.VERCEL_ENV !== "preview" &&
   process.env.VERCEL_ENV !== "development";
 
-export const siteName = "Berke Katrancı · Gariban Adam";
+export const siteName = "Berke Katrancı";
 export const defaultTitle =
-  "Berke Katrancı (Gariban Adam) | AI & Software Portfolio";
+  "Berke Katrancı";
 export const defaultDescription =
-  "Berke Katrancı, also known as Gariban Adam: AI, machine learning and software projects, research, and community leadership at TU Braunschweig.";
+  "Berke Katrancı,Explore AI, machine learning and software projects at TU Braunschweig.";
+
+// Personal aliases and their spelling variants belong to the same identity.
+// Keep them in metadata; the portfolio's visible text stays unchanged.
+const personAlternateNames = [
+  "Berke Katranci",
+  "Gariban Adam",
+  "garibanadam",
+  "gariban-adam",
+  "gariban_adam",
+  "Fakir Adam",
+  "fakiradam",
+  "fakir-adam",
+  "fakir_adam",
+  "Fakfakir Adam",
+  "fakfakiradam",
+  "fakfakir-adam",
+  "fakfakir_adam",
+  "Fak Fakir Adam",
+  "fak-fakir-adam",
+  "fak_fakir_adam"
+];
 
 export function absoluteUrl(path: string): string {
   return new URL(path, `${siteOrigin}/`).toString();
@@ -88,13 +109,24 @@ export const personSchema = {
   "@type": "Person",
   "@id": absoluteUrl("/#person"),
   name: "Berke Katrancı",
-  alternateName: ["Berke Katranci", "Gariban Adam", "garibanadam", "gariban_adam"],
+  alternateName: personAlternateNames,
   url: absoluteUrl("/"),
   description: defaultDescription,
   jobTitle: "Software / AI Developer (student worker)",
   affiliation: { "@type": "CollegeOrUniversity", name: "TU Braunschweig" },
   knowsAbout: ["Artificial Intelligence", "Machine Learning", "Software Engineering", "Data Science"],
   sameAs: [socials.linkedin, socials.instagram]
+};
+
+export const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": absoluteUrl("/#website"),
+  name: siteName,
+  alternateName: ["Gariban Adam"],
+  url: absoluteUrl("/"),
+  inLanguage: "en",
+  publisher: { "@id": personSchema["@id"] }
 };
 
 export function profilePageSchema(path: string) {
@@ -105,6 +137,7 @@ export function profilePageSchema(path: string) {
     url: absoluteUrl(path),
     name: defaultTitle,
     inLanguage: "en",
+    isPartOf: { "@id": websiteSchema["@id"] },
     mainEntity: { "@id": personSchema["@id"] }
   };
 }

@@ -1,3 +1,5 @@
+import { salzgitterInternship } from "@/data/profile";
+
 export type CVEntry = {
   period: string;
   title: string;
@@ -49,6 +51,13 @@ export const education: CVEntry[] = [
 ];
 
 export const experience: CVEntry[] = [
+  {
+    period: `Since ${salzgitterInternship.started}`,
+    title: salzgitterInternship.title,
+    organization: salzgitterInternship.organization,
+    description: salzgitterInternship.description,
+    type: "experience"
+  },
   {
     period: "Since 07.2025",
     title: "Software / AI Developer, Student Research Assistant",

@@ -1,0 +1,88 @@
+.option {
+  @apply text-muted;
+
+  border-bottom: 2px solid transparent;
+  padding-inline: 0.25rem;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+
+.option[aria-pressed="true"] {
+  @apply text-sky;
+
+  border-color: currentColor;
+}
+
+.option:active {
+  @apply bg-white/5;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .option:hover:not([aria-pressed="true"]) {
+    @apply text-text;
+  }
+}
+
+.scene {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 2.1;
+  min-height: 130px;
+  background-color: #203136;
+}
+
+.scene > div,
+.overlay > div {
+  position: absolute;
+  inset: 0;
+}
+
+.horizon {
+  background-color: #293e3b;
+  clip-path: polygon(0 32%, 14% 19%, 24% 25%, 35% 35%, 51% 43%, 64% 30%, 77% 32%, 92% 18%, 100% 24%, 100% 100%, 0 100%);
+}
+
+.road {
+  background-color: #171e22;
+  clip-path: polygon(44% 38%, 56% 38%, 100% 100%, 0 100%);
+}
+
+.centerLine {
+  background: repeating-linear-gradient(to bottom, transparent 0 12px, #9fa6a0 12px 19px);
+  clip-path: polygon(49.8% 39%, 50.2% 39%, 50.8% 100%, 49.2% 100%);
+  opacity: 0.85;
+}
+
+.boundary {
+  background-color: #c4c7bb;
+}
+
+.left {
+  clip-path: polygon(44.5% 39%, 45% 39%, 10% 100%, 8% 100%);
+}
+
+.right {
+  clip-path: polygon(55% 39%, 55.5% 39%, 92% 100%, 90% 100%);
+}
+
+.overlay {
+  opacity: 0;
+  clip-path: inset(100% 0 0);
+  transition: opacity 200ms ease, clip-path 200ms ease-out;
+}
+
+.overlay .boundary {
+  @apply bg-sky;
+}
+
+.scene[data-overlay="true"] .overlay {
+  opacity: 1;
+  clip-path: inset(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .option,
+  .overlay {
+    transition: none;
+  }
+}

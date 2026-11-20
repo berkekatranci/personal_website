@@ -1,15 +1,12 @@
 import Link from "next/link";
+import { AboutFocus } from "@/components/AboutInteractions";
 import { recruiterSummary } from "@/data/profile";
 
 export function RecruiterSummary() {
   return (
     <aside className="border-l border-sky/40 pl-6 lg:pl-8">
       <p className="eyebrow">Recruiter Summary</p>
-      <p className="mt-5 break-words font-display text-2xl leading-8 text-text">
-        Currently: Software / AI Developer at TU Braunschweig HPC as student
-        worker · 1st Chairperson of NovaExchangeWorkshop · M.Sc. student at TU
-        Braunschweig
-      </p>
+      <AboutFocus />
       <ul className="mt-7 border-t border-white/10">
         {recruiterSummary.map((item, index) => (
           <li

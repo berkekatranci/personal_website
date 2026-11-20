@@ -35,7 +35,7 @@ export function ProjectDisclosure({ project, index, featured = false, active = f
           aria-expanded={isOpen}
           aria-controls={panelId}
           onClick={() => setIsOpen((value) => !value)}
-          className="focus-ring group grid min-h-20 w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-x-5 gap-y-3 py-6 text-left transition-colors hover:text-sky sm:grid-cols-[2rem_minmax(0,1fr)_auto]"
+          className="project-disclosure-trigger focus-ring group grid min-h-20 w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-x-5 gap-y-3 py-6 text-left sm:grid-cols-[2rem_minmax(0,1fr)_auto]"
         >
           <span className="hidden font-mono text-[11px] text-slate-500 sm:block">
             {String(index + 1).padStart(2, "0")}
@@ -49,9 +49,10 @@ export function ProjectDisclosure({ project, index, featured = false, active = f
               <span className={`mt-3 block font-mono text-[11px] uppercase ${statusClass}`}>{project.status}</span>
             ) : null}
           </span>
-          <span className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-2 text-muted group-hover:text-sky">
+          <span className={`project-disclosure-control flex min-h-11 min-w-11 flex-col items-center justify-center gap-2 ${isOpen ? "text-sky" : "text-muted"}`}>
             <motion.span
               aria-hidden
+              initial={false}
               className="inline-flex"
               animate={{ rotate: isOpen ? 180 : 0 }}
               transition={transition}
@@ -74,7 +75,12 @@ export function ProjectDisclosure({ project, index, featured = false, active = f
       >
         <div ref={contentRef} {...inertProps(!isOpen)} className="pb-8 pt-3 sm:pl-7">
           <p className={`mb-7 font-mono text-[11px] uppercase ${statusClass}`}>{project.status}</p>
-          <dl className="grid gap-7">
+          <motion.dl
+            initial={false}
+            animate={{ y: isOpen || reducedMotion ? 0 : 6 }}
+            transition={transition}
+            className="grid gap-7"
+          >
             {[
               ["Problem", project.problem],
               ["My role", project.role],
@@ -85,7 +91,7 @@ export function ProjectDisclosure({ project, index, featured = false, active = f
                 <dd className="prose-copy text-muted">{value}</dd>
               </div>
             ))}
-          </dl>
+          </motion.dl>
           <div className="mt-8 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/10 pt-5">
             {project.techStack.map((tech) => (
               <SkillBadge key={tech}>{tech}</SkillBadge>

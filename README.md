@@ -2,9 +2,10 @@
 
 Personal portfolio and CV website built with Next.js App Router, TypeScript, Tailwind CSS, Framer Motion, and structured content files.
 
-The homepage is supported by three static project case studies. Gariban Adam
-and its spelling variants are used only in SEO metadata and the Person schema;
-there is no separate alias page or visible alias content.
+The homepage is supported by three static project case studies. Gariban Adam,
+Fakir Adam, Fakfakir Adam and their spelling variants are used in SEO metadata
+and structured data. The existing visible text and design stay unchanged;
+there are no separate alias pages or hidden keyword blocks.
 
 ## Run locally
 
@@ -65,9 +66,16 @@ in Vercel Project Settings. A template is included in `.env.example`.
 ## SEO ve yayın sonrası adımlar
 
 - Ana alan adı ve tüm canonical adresleri: `https://berkekatranci.com`.
-- Gariban Adam, garibanadam ve gariban_adam yalnızca SEO metadata ve `Person`
-  şemasındaki alternatif adlarda kullanılır. Görünür içerikte bu adlar için
-  bölüm, bağlantı veya ayrı profil sayfası yoktur.
+- Gariban Adam, Fakir Adam ve Fakfakir Adam (Fak Fakir Adam yazımı dahil)
+  yalnızca SEO metadata ve yapılandırılmış veride kullanılır. `Person`
+  şemasındaki alternatif adlar bitişik, tireli ve alt çizgili yazımları da kapsar. Mevcut görünür metinler
+  ve tasarım aynen korunur; ayrı ad sayfaları veya gizli anahtar kelime blokları yoktur.
+- Ana sayfadaki `WebSite` şeması sitenin adını Berke Katrancı, alternatif
+  site adını Gariban Adam olarak tanımlar. Diğer takma adlar kişinin alternatif
+  adlarında kalır. `ProfilePage.mainEntity` ve `WebSite.publisher` aynı `Person`
+  kimliğine bağlanır.
+- Metadata ve yapılandırılmış veri kimlik bilgisini arama motorlarına sunar;
+  tek başına bu sorgularda sıralama veya indekslenme garantisi vermez.
 - Eski `/gariban-adam`, `/garibanadam` ve `/gariban_adam` adresleri 308 ile
   ana sayfaya (`/`) yönlenir.
 - `garibanadam.com`, `www.garibanadam.com` ve `www.berkekatranci.com`
@@ -108,12 +116,15 @@ Elle tamamlanacak adımlar:
    kontrol et. İstersen yönlenen alan için de ayrı Search Console Domain
    mülkü doğrulayabilirsin; sitemap ana alanda kalmalıdır.
 8. LinkedIn, Instagram ve kullanıyorsan GitHub profilinde site bağlantısını
-   güncelle. Gariban Adam adını kullandığın profillerde aynı ad ve site
-   bağlantısını tutarlı kullan. Gerçek GitHub/demo/video adreslerini
+   güncelle. Bu takma adları gerçekten kullandığın herkese açık profillerde
+   adın ve site bağlantınla ilişkilerini tutarlı biçimde belirt. Gerçek GitHub/demo/video adreslerini
    `data/projects.ts` içine ekle; boş adresler uydurma bağlantıyla doldurulmaz.
 9. PageSpeed Insights ile production ana sayfayı mobilde ölç. Search Console
    performans raporunda `Berke Katrancı`, `Berke Katranci`, `gariban adam`,
-   `garibanadam` ve `gariban_adam` sorgularının gösterim ve tıklamalarını izle.
+   `garibanadam`, `gariban_adam`, `fakir adam`, `fakiradam`, `fakir_adam`,
+   `fakfakir adam`, `fakfakiradam`, `fakfakir_adam` ve `fak fakir adam`
+   sorgularının gösterim ve tıklamalarını izle. Tireli yazımları da aynı
+   sorgu ailesi içinde takip et.
    Sıralama veya indekslenme garantisi yoktur; birkaç haftalık veriye göre
    gerçek proje içeriğini geliştirmeye devam et.
 
@@ -122,6 +133,7 @@ Doğrulama kaynakları:
 - [Google Search Console doğrulama](https://support.google.com/webmasters/answer/9008080)
 - [Sitemap gönderme](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap)
 - [Canonical adresler](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls)
+- [Site adları ve WebSite şeması](https://developers.google.com/search/docs/appearance/site-names)
 
 ## SEO doğrulaması
 
@@ -129,6 +141,7 @@ Doğrulama kaynakları:
 çalıştır. `npm run seo:check` komutu production sunucusunun HTML metadata,
 JSON-LD, robots/sitemap, 308 yönlendirme, 404 ve sosyal görsel kontrollerini yapar.
 Ana sayfa ve üç proje sayfasının yanı sıra eski ad yollarının ana sayfaya
-yönlendiğini ve görünür içerikte yalnızca SEO için tutulan adın bulunmadığını doğrular.
+yönlendiğini, SEO takma adlarının görünür içerikte bulunmadığını, Person/WebSite
+ilişkilerini ve sayfa metadata'sının OG/Twitter alanlarıyla tutarlılığını doğrular.
 Farklı bir yerel port için `npm run seo:check -- http://localhost:PORT` kullan.
 Bu kontrol localhost üzerinde çalışır; DNS ve canlı Vercel ayarlarını doğrulamaz.

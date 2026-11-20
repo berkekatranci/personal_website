@@ -1,14 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
 import { navLinks } from "@/data/profile";
 import { inertProps } from "@/components/inertProps";
+import { SectionLink } from "@/components/SectionLink";
 import { useMeasuredHeight } from "@/components/useMeasuredHeight";
+import { sectionNavigationEvent } from "@/lib/section-navigation";
 
 const primaryLabels = new Set(["About", "Projects", "AI & Data", "Leadership", "CV"]);
 
@@ -20,7 +20,7 @@ export function Navbar() {
   const menuButton = useRef<HTMLButtonElement>(null);
   const indexButton = useRef<HTMLButtonElement>(null);
   const indexContainer = useRef<HTMLDivElement>(null);
-  const navigationTarget = useRef<HTMLElement | null>(null);
+  const navigationTarget = useRef<number | null>(null);
   const reducedMotion = useReducedMotion();
   const { contentRef: menuContentRef, contentHeight: menuHeight } = useMeasuredHeight();
   const primaryLinks = navLinks.filter((link) => primaryLabels.has(link.label));
@@ -37,13 +37,15 @@ export function Navbar() {
     let frame = 0;
     const updateActiveSection = () => {
       frame = 0;
+      // A cover dialog temporarily fixes the body to preserve its scroll position.
+      if (document.querySelector("dialog[open]")) return;
       const target = navigationTarget.current;
-      if (target) {
-        const top = target.getBoundingClientRect().top;
-        if (top > 112 && window.innerHeight + window.scrollY < document.documentElement.scrollHeight - 2) return;
+      if (target !== null) {
+        if (Math.abs(window.scrollY - target) > 3) return;
         navigationTarget.current = null;
       }
-      const current = sections.filter((section) => section.getBoundingClientRect().top <= 112).at(-1) ?? sections[0];
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      const current = (atBottom ? sections.at(-1) : sections.filter((section) => section.getBoundingClientRect().top <= 112).at(-1)) ?? sections[0];
       setActiveHref(`/#${current.id}`);
     };
     const scheduleUpdate = () => {
@@ -53,12 +55,31 @@ export function Navbar() {
       navigationTarget.current = null;
       scheduleUpdate();
     };
+    const startNavigation = (event: Event) => {
+      const section = document.getElementById((event as CustomEvent<{ id: string }>).detail.id);
+      if (!section) return;
+      const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      const margin = parseFloat(getComputedStyle(section).scrollMarginTop) || 0;
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      navigationTarget.current = Math.max(0, Math.min(maxScroll, window.scrollY + section.getBoundingClientRect().top - padding - margin));
+      setActiveHref(`/#${section.id}`);
+      setIsOpen(false);
+      setIsIndexOpen(false);
+    };
+    const interruptWithKeyboard = (event: KeyboardEvent) => {
+      if (["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) releaseTarget();
+    };
     updateActiveSection();
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
     window.addEventListener("resize", scheduleUpdate);
     window.addEventListener("scrollend", releaseTarget);
     window.addEventListener("wheel", releaseTarget, { passive: true });
     window.addEventListener("touchstart", releaseTarget, { passive: true });
+    window.addEventListener("pointerdown", releaseTarget, { passive: true });
+    window.addEventListener("keydown", interruptWithKeyboard);
+    window.addEventListener("popstate", releaseTarget);
+    window.addEventListener("hashchange", releaseTarget);
+    window.addEventListener(sectionNavigationEvent, startNavigation);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", scheduleUpdate);
@@ -66,6 +87,11 @@ export function Navbar() {
       window.removeEventListener("scrollend", releaseTarget);
       window.removeEventListener("wheel", releaseTarget);
       window.removeEventListener("touchstart", releaseTarget);
+      window.removeEventListener("pointerdown", releaseTarget);
+      window.removeEventListener("keydown", interruptWithKeyboard);
+      window.removeEventListener("popstate", releaseTarget);
+      window.removeEventListener("hashchange", releaseTarget);
+      window.removeEventListener(sectionNavigationEvent, startNavigation);
     };
   }, [pathname]);
 
@@ -99,21 +125,6 @@ export function Navbar() {
     return () => desktop.removeEventListener("change", closeMenus);
   }, []);
 
-  const navigate = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    setIsOpen(false);
-    setIsIndexOpen(false);
-    setActiveHref(href);
-    const section = document.getElementById(href.split("#")[1]);
-    if (!section) return;
-    event.preventDefault();
-    navigationTarget.current = section;
-    section.setAttribute("tabindex", "-1");
-    section.focus({ preventScroll: true });
-    window.history.pushState(null, "", href);
-    section.scrollIntoView({ behavior: reducedMotion ? "instant" : "smooth", block: "start" });
-  };
-
   const underline = (
     <motion.span
       aria-hidden
@@ -129,21 +140,21 @@ export function Navbar() {
         Skip to content
       </a>
       <nav aria-label="Primary navigation" className="content-shell flex h-16 items-center justify-between gap-4">
-        <Link href="/#home" onClick={(event) => navigate(event, "/#home")} className="focus-ring flex min-h-11 shrink-0 items-center gap-4">
+        <SectionLink href="/#home" className="focus-ring flex min-h-11 shrink-0 items-center gap-4">
           <span className="font-display text-xl text-text">Berke Katrancı</span>
           <span className="hidden border-l border-white/15 pl-4 font-mono text-[10px] uppercase text-muted sm:inline lg:hidden xl:inline">
             Systems builder
           </span>
-        </Link>
+        </SectionLink>
         <LayoutGroup id="primary-navigation">
           <div className="hidden items-center gap-5 lg:flex">
             {primaryLinks.map((link) => (
-              <Link key={link.href} href={link.href} onClick={(event) => navigate(event, link.href)}
+              <SectionLink key={link.href} href={link.href}
                 aria-current={activeHref === link.href ? "location" : undefined}
-                className={`focus-ring relative inline-flex min-h-11 items-center px-1 text-xs font-medium transition-colors ${activeHref === link.href ? "text-text" : "text-muted hover:text-text"}`}>
+                className={`focus-ring relative inline-flex min-h-11 items-center px-1 text-xs font-medium transition-colors active:bg-white/[0.04] ${activeHref === link.href ? "text-text" : "text-muted hover:text-text"}`}>
                 {link.label}
                 {activeHref === link.href ? underline : null}
-              </Link>
+              </SectionLink>
             ))}
             <div ref={indexContainer} className="relative">
               <button ref={indexButton} type="button" aria-label="Open section index" aria-expanded={isIndexOpen}
@@ -165,22 +176,22 @@ export function Navbar() {
                 className={`absolute right-0 top-[calc(100%+0.75rem)] w-64 border border-white/10 bg-night p-2 shadow-card ${isIndexOpen ? "" : "pointer-events-none"}`}>
                 <div {...inertProps(!isIndexOpen)}>
                 {navLinks.map((link, index) => (
-                  <Link key={link.href} href={link.href} onClick={(event) => navigate(event, link.href)}
+                  <SectionLink key={link.href} href={link.href}
                     aria-current={activeHref === link.href ? "location" : undefined}
-                    className="focus-ring grid min-h-11 grid-cols-[2rem_1fr] items-center border-b border-white/10 px-3 text-sm text-muted transition-colors last:border-b-0 hover:bg-white/[0.04] hover:text-text">
+                    className="focus-ring grid min-h-11 grid-cols-[2rem_1fr] items-center border-b border-white/10 px-3 text-sm text-muted transition-colors last:border-b-0 hover:bg-white/[0.04] hover:text-text active:bg-white/[0.04]">
                     <span className="font-mono text-[10px] text-slate-500">{String(index + 1).padStart(2, "0")}</span>
                     <span className={activeHref === link.href ? "text-sky" : ""}>{link.label}</span>
-                  </Link>
+                  </SectionLink>
                 ))}
                 </div>
               </motion.div>
             </div>
-            <Link href="/#contact" onClick={(event) => navigate(event, "/#contact")}
+            <SectionLink href="/#contact"
               aria-current={activeHref === "/#contact" ? "location" : undefined}
               className="focus-ring relative ml-1 inline-flex min-h-11 items-center border-l border-white/15 pl-5 text-xs font-semibold text-sky transition-colors hover:text-text">
               Contact
               {activeHref === "/#contact" ? underline : null}
-            </Link>
+            </SectionLink>
           </div>
         </LayoutGroup>
         <button ref={menuButton} type="button" aria-label="Toggle navigation" aria-expanded={isOpen}
@@ -196,14 +207,19 @@ export function Navbar() {
         <div ref={menuContentRef} {...inertProps(!isOpen)}>
         <motion.div initial={false} animate={{ y: isOpen ? 0 : -8 }} transition={menuTransition}
           className="content-shell max-h-[calc(100svh-4rem)] overflow-y-auto border-t border-white/10 py-3">
+          <LayoutGroup id="mobile-section-navigation">
           {navLinks.map((link, index) => (
-            <Link key={link.href} href={link.href} onClick={(event) => navigate(event, link.href)}
+            <SectionLink key={link.href} href={link.href}
               aria-current={activeHref === link.href ? "location" : undefined}
-              className="focus-ring grid min-h-12 grid-cols-[2.5rem_1fr] items-center border-b border-white/10 text-sm font-medium text-muted transition-colors hover:text-text">
+              className="focus-ring grid min-h-12 grid-cols-[2.5rem_1fr] items-center border-b border-white/10 text-sm font-medium text-muted transition-colors hover:text-text active:bg-white/[0.04]">
               <span className="font-mono text-[10px] text-slate-500">{String(index + 1).padStart(2, "0")}</span>
-              <span className={activeHref === link.href ? "text-sky" : ""}>{link.label}</span>
-            </Link>
+              <span className={`relative justify-self-start py-3 ${activeHref === link.href ? "text-sky" : ""}`}>
+                {link.label}
+                {activeHref === link.href ? underline : null}
+              </span>
+            </SectionLink>
           ))}
+          </LayoutGroup>
         </motion.div>
         </div>
       </motion.div>

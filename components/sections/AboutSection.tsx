@@ -1,3 +1,4 @@
+import { AboutKeywords } from "@/components/AboutInteractions";
 import { ProfilePillarCard } from "@/components/ProfilePillarCard";
 import { RecruiterSummary } from "@/components/RecruiterSummary";
 import { Reveal } from "@/components/Reveal";
@@ -14,6 +15,7 @@ export function AboutSection() {
             title="A systems-minded builder across AI, software, teams, and strategy."
             description="My work connects technical depth with practical execution. AI models are data systems. Software projects are technical systems. Organizations are human systems. Investing is information gathering and decision-making systems. 3D design is spatial and visual systems thinking. Games and NP-hard problems are optimization systems."
           />
+          <AboutKeywords />
         </Reveal>
 
         <div className="mt-14 grid grid-cols-[minmax(0,1fr)] gap-14">

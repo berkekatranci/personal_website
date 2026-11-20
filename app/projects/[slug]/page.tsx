@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ArrowUpLeft } from "lucide-react";
+import { LaneDetectionDemo } from "@/components/LaneDetectionDemo";
 import { SkillBadge } from "@/components/SkillBadge";
 import { StructuredData } from "@/components/StructuredData";
 import { caseStudies, getCaseStudy } from "@/data/case-studies";
@@ -35,6 +36,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   if (!caseStudy) notFound();
 
   const relatedStudies = caseStudies.filter(({ slug }) => slug !== caseStudy.slug);
+  const hasLaneDemo = caseStudy.slug === "lane-detection";
 
   return (
     <article className="bg-ink">
@@ -101,6 +103,13 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                   </a>
                 </li>
               ))}
+              {hasLaneDemo ? (
+                <li>
+                  <a href="#lane-demo" className="focus-ring inline-block py-1 text-sm leading-6 text-muted transition-colors hover:text-sky">
+                    Interactive demo
+                  </a>
+                </li>
+              ) : null}
             </ul>
           </nav>
         </aside>
@@ -119,6 +128,9 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                   </ul>
                 ) : null}
               </div>
+              {hasLaneDemo && section.id === "approach" ? (
+                <LaneDetectionDemo />
+              ) : null}
             </section>
           ))}
 
