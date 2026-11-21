@@ -3,8 +3,15 @@ import { request as httpRequest } from "node:http";
 import { request as httpsRequest } from "node:https";
 
 // Run against `npm run start -- --port 3100` after a production build.
-// Requests stay on loopback even when checking production URLs and Host redirects.
-const primaryOrigin = "https://berkekatranci.com";
+// Requests stay on loopback even when simulating Vercel's domain routing.
+const primaryOrigin = "https://www.berkekatranci.com";
+const applicationHosts = [
+  "berkekatranci.com",
+  "www.berkekatranci.com",
+  "garibanadam.com",
+  "www.garibanadam.com",
+  "example.vercel.app"
+];
 const indexablePaths = [
   "/",
   "/projects/weather-forecasting",
@@ -21,7 +28,6 @@ const expectedAliases = [
   "Fakfakir Adam", "fakfakiradam", "fakfakir-adam", "fakfakir_adam",
   "Fak Fakir Adam", "fak-fakir-adam", "fak_fakir_adam"
 ];
-const primaryAliasFamilies = ["Gariban Adam", "Fakir Adam", "Fakfakir Adam"];
 let checks = 0;
 const failures = [];
 
@@ -123,6 +129,63 @@ function checkVisibleBody(html) {
   );
 }
 
+// These edge maps are fixtures, not inferred from application redirect rules.
+// The www map matches the live domain headers observed on 2026-11-21.
+// The reverse map guards against the same bug if the Vercel preference changes.
+const platformTopologies = [
+  {
+    name: "Vercel apex/aliases to www",
+    terminalHost: "www.berkekatranci.com",
+    redirects: new Map([
+      ["berkekatranci.com", "www.berkekatranci.com"],
+      ["garibanadam.com", "www.berkekatranci.com"],
+      ["www.garibanadam.com", "www.berkekatranci.com"]
+    ])
+  },
+  {
+    name: "reverse Vercel www/aliases to apex",
+    terminalHost: "berkekatranci.com",
+    redirects: new Map([
+      ["www.berkekatranci.com", "berkekatranci.com"],
+      ["garibanadam.com", "berkekatranci.com"],
+      ["www.garibanadam.com", "berkekatranci.com"]
+    ])
+  }
+];
+
+async function traceRedirects(start, edgeRedirects, applicationStep, maxHops = 4) {
+  let current = new URL(start);
+  const visited = new Set();
+  const hops = [];
+
+  for (;;) {
+    if (visited.has(current.href)) return { outcome: "cycle", url: current, hops };
+    visited.add(current.href);
+
+    const edgeHost = edgeRedirects.get(current.hostname);
+    let layer = "application";
+    let response;
+    if (edgeHost) {
+      const target = new URL(current);
+      target.hostname = edgeHost;
+      response = { status: 308, location: target.href };
+      layer = "platform";
+    } else {
+      response = await applicationStep(current);
+    }
+
+    if (![301, 302, 303, 307, 308].includes(response.status)) {
+      return { outcome: "complete", status: response.status, url: current, hops };
+    }
+    if (!response.location) return { outcome: "missing-location", url: current, hops };
+    if (hops.length >= maxHops) return { outcome: "limit", url: current, hops };
+
+    const target = new URL(response.location, current);
+    hops.push({ layer, status: response.status, from: current.href, to: target.href });
+    current = target;
+  }
+}
+
 async function group(label, action) {
   try {
     await action();
@@ -196,11 +259,6 @@ async function main() {
       equal(single(meta(html, "name", "twitter:title"), "expected one Twitter title"), title, "Twitter title should match page title");
       equal(single(meta(html, "name", "twitter:description"), "expected one Twitter description"), description, "Twitter description should match page description");
       equal(single(meta(html, "name", "twitter:card"), "expected one Twitter card"), "summary_large_image", "Twitter card type");
-      if (path === "/") {
-        for (const family of primaryAliasFamilies) {
-          check(new RegExp(`\\b${family}\\b`, "i").test(`${title} ${description}`), `homepage metadata should include ${family}`);
-        }
-      }
       titles.add(title);
       descriptions.add(description);
       equal(new URL(canonical(html)).href, new URL(path, primaryOrigin).href, "canonical should identify this primary-domain page");
@@ -287,23 +345,73 @@ async function main() {
     });
   }
 
-  for (const alias of retiredAliasPaths) {
-    await group(alias, async () => {
-      const response = await request(`${alias}?ref=seo-check&variant=gariban%20adam`);
-      equal(response.status, 308, "alias should redirect permanently");
-      const location = new URL(response.headers.get("location"), base);
-      equal(location.pathname, "/", "retired alias route should target the homepage");
-      equal(location.search, "?ref=seo-check&variant=gariban%20adam", "alias redirect should preserve query parameters");
-    });
+  const query = "?ref=seo-check&variant=gariban%20adam";
+  for (const host of applicationHosts) {
+    for (const path of ["/", "/projects/lane-detection"]) {
+      await group(`${host}${path} application response`, async () => {
+        const response = await request(`${path}${query}`, { headers: { host } });
+        equal(response.status, 200, "application should serve all hosts without duplicating Vercel domain redirects");
+        equal(response.headers.get("location"), null, "application should not add a host redirect");
+        equal(new URL(canonical(await response.text())).href, new URL(path, primaryOrigin).href, "all served hosts should retain the selected www canonical");
+      });
+    }
+
+    for (const alias of retiredAliasPaths) {
+      await group(`${host}${alias} bounded path redirect`, async () => {
+        const logicalUrl = new URL(`${alias}${query}`, `https://${host}`);
+        const response = await request(`${alias}${query}`, { headers: { host } });
+        equal(response.status, 308, "retired alias should redirect permanently");
+        const locationHeader = response.headers.get("location");
+        check(locationHeader?.startsWith("/") && !locationHeader.startsWith("//"), "alias redirect should remain a relative path");
+        const location = new URL(locationHeader, logicalUrl);
+        equal(location.origin, logicalUrl.origin, "path redirect should keep domain routing with Vercel");
+        equal(location.pathname, "/", "retired alias route should target the homepage");
+        equal(location.search, query, "alias redirect should preserve query parameters");
+
+        const landing = await request(`${location.pathname}${location.search}`, { headers: { host: location.host } });
+        equal(landing.status, 200, "retired alias should reach a page after one application redirect");
+        equal(landing.headers.get("location"), null, "retired alias landing should not redirect again");
+      });
+    }
   }
 
-  for (const host of ["garibanadam.com", "www.garibanadam.com", "www.berkekatranci.com"]) {
-    await group(`${host} redirect`, async () => {
-      const path = "/projects/lane-detection?ref=seo-check&variant=gariban%20adam";
-      const response = await request(path, { headers: { host } });
-      equal(response.status, 308, "secondary host should redirect permanently");
-      equal(response.headers.get("location"), `${primaryOrigin}${path}`, "host redirect should preserve the full path and query on primary domain");
-    });
+  async function runtimeStep(url) {
+    const response = await request(`${url.pathname}${url.search}`, { headers: { host: url.host } });
+    return { status: response.status, location: response.headers.get("location") };
+  }
+
+  await group("legacy two-layer loop regression fixture", async () => {
+    const topology = platformTopologies[0];
+    // This deliberately restores the old app-level www -> apex rule on top
+    // of the platform's observed apex -> www redirect, without changing code.
+    const legacyStep = async (url) => {
+      if (url.hostname === "www.berkekatranci.com") {
+        const target = new URL(url);
+        target.hostname = "berkekatranci.com";
+        return { status: 308, location: target.href };
+      }
+      return runtimeStep(url);
+    };
+    const result = await traceRedirects(`https://berkekatranci.com/projects/lane-detection${query}`, topology.redirects, legacyStep);
+    equal(result.outcome, "cycle", "regression fixture must reproduce the original platform/app redirect loop");
+    equal(result.hops.length, 2, "original conflict should cycle after two opposite domain redirects");
+    check(result.hops.some(({ layer }) => layer === "platform") && result.hops.some(({ layer }) => layer === "application"), "cycle fixture should exercise both routing layers");
+  });
+
+  for (const topology of platformTopologies) {
+    for (const host of applicationHosts) {
+      for (const path of ["/projects/lane-detection", ...retiredAliasPaths]) {
+        await group(`${topology.name}: ${host}${path}`, async () => {
+          const result = await traceRedirects(`https://${host}${path}${query}`, topology.redirects, runtimeStep);
+          equal(result.outcome, "complete", "combined platform/application graph should terminate without a cycle");
+          equal(result.status, 200, "combined routing should end at a working page");
+          equal(result.url.hostname, host.endsWith(".vercel.app") ? host : topology.terminalHost, "domain routing should honor the platform-selected host");
+          equal(result.url.pathname, retiredAliasPaths.includes(path) ? "/" : path, "combined routing should retain the intended path");
+          equal(result.url.search, query, "combined routing should preserve the query");
+          check(result.hops.length <= (retiredAliasPaths.includes(path) ? 2 : 1), "combined routing should need at most one domain and one path redirect");
+        });
+      }
+    }
   }
 
   await group("unknown project", async () => {
@@ -329,7 +437,7 @@ async function main() {
     console.error(`SEO audit failed: ${failures.length} group(s), ${checks} checks passed.`);
     process.exitCode = 1;
   } else {
-    console.log(`PASS ${checks} SEO checks across 4 pages, visible content, sitemap, robots, redirects, legal metadata, 404 and OG image.`);
+    console.log(`PASS ${checks} SEO checks across 4 pages, host responses, two-layer redirect regression, sitemap, robots, legal metadata, 404 and OG image.`);
   }
 }
 

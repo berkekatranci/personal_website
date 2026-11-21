@@ -65,7 +65,7 @@ in Vercel Project Settings. A template is included in `.env.example`.
 
 ## SEO ve yayın sonrası adımlar
 
-- Ana alan adı ve tüm canonical adresleri: `https://berkekatranci.com`.
+- Ana alan adı ve tüm canonical adresleri: `https://www.berkekatranci.com`.
 - Gariban Adam, Fakir Adam ve Fakfakir Adam (Fak Fakir Adam yazımı dahil)
   yalnızca SEO metadata ve yapılandırılmış veride kullanılır. `Person`
   şemasındaki alternatif adlar bitişik, tireli ve alt çizgili yazımları da kapsar. Mevcut görünür metinler
@@ -78,8 +78,10 @@ in Vercel Project Settings. A template is included in `.env.example`.
   tek başına bu sorgularda sıralama veya indekslenme garantisi vermez.
 - Eski `/gariban-adam`, `/garibanadam` ve `/gariban_adam` adresleri 308 ile
   ana sayfaya (`/`) yönlenir.
-- `garibanadam.com`, `www.garibanadam.com` ve `www.berkekatranci.com`
-  istekleri aynı yol ve sorgu parametreleri korunarak ana alana 308 ile yönlenir.
+- Alan adı yönlendirmelerinin sahibi Vercel Domains ayarlarıdır. Uygulamada
+  host tabanlı yönlendirme yoktur; yalnızca yukarıdaki eski yol yönlendirmeleri kalır.
+  Vercel'de `www.berkekatranci.com` ana alan olarak çalışır; `berkekatranci.com`,
+  `garibanadam.com` ve `www.garibanadam.com` bu alana 308 ile yönlenir.
 - Sitemap: `/sitemap.xml`; tarama kuralları: `/robots.txt`.
 - Vercel Preview/Development dağıtımları `noindex` kullanır. Sitemap bu
   ortamlarda boştur ve robots.txt taramaya kapalıdır.
@@ -93,26 +95,27 @@ Elle tamamlanacak adımlar:
 
 1. Bu değişiklikleri mevcut Git deposuna gönderip Vercel'de Production'a
    dağıt. Preview bağlantısı Google'a açılmaz.
-2. Vercel projesinin Domains bölümünde `berkekatranci.com` ana alan adını,
-   `garibanadam.com` ve kullanacağın `www` adreslerini kontrol et. İkincil
-   alanları ana alana kalıcı yönlendiren ayarı koru. Vercel alanı projeye
-   ulaştırmadan Next.js yönlendirme kuralı çalışamaz. DNS kayıtlarını
+2. Vercel projesinin Domains bölümünde `www.berkekatranci.com` adresini
+   Production'a bağlı ana alan olarak koru. `berkekatranci.com`,
+   `garibanadam.com` ve `www.garibanadam.com` adresleri buraya 308 ile yönlensin;
+   ana `www` alanını tekrar apex alanına yönlendirme. DNS kayıtlarını
    Vercel'in gösterdiği değerlere göre ayarla; rastgele IP kullanma.
 3. Vercel Production ortam değişkenlerinde `SITE_URL` varsa
-   `https://berkekatranci.com` olduğundan emin ol. Kodun varsayılanı da budur;
+   `https://www.berkekatranci.com` olduğundan emin ol. `NEXT_PUBLIC_SITE_URL`
+   kullanıyorsan onu da aynı değerle güncelle. Kodun varsayılanı da budur;
    eklemek zorunlu değildir. Değişiklik yaptıysan yeniden dağıt.
 4. Google Search Console'da `berkekatranci.com` için bir Domain mülkü ekle.
    Verilen TXT kaydını DNS sağlayıcına ekleyip doğrula. URL-prefix/HTML
    etiketi yöntemini seçersen yalnızca etiketin `content` değerini Vercel'de
    `GOOGLE_SITE_VERIFICATION` değişkenine ekleyip yeniden dağıt.
 5. Search Console > Sitemaps bölümüne
-   `https://berkekatranci.com/sitemap.xml` adresini gönder.
+   `https://www.berkekatranci.com/sitemap.xml` adresini gönder.
 6. URL Denetleme aracıyla yalnızca ana sayfayı ve üç proje sayfasını
    (`/projects/weather-forecasting`, `/projects/lane-detection`,
    `/projects/hardware-aware-gpt`) canlı test et. Taramanın açık ve canonical
    adreslerin ana alanda olduğunu doğrulayıp bu dört URL'nin dizine eklenmesini iste.
 7. `https://garibanadam.com/projects/lane-detection?ref=test` adresini açarak
-   `https://berkekatranci.com/projects/lane-detection?ref=test` adresine kalıcı yönlendiğini
+   `https://www.berkekatranci.com/projects/lane-detection?ref=test` adresine kalıcı yönlendiğini
    kontrol et. İstersen yönlenen alan için de ayrı Search Console Domain
    mülkü doğrulayabilirsin; sitemap ana alanda kalmalıdır.
 8. LinkedIn, Instagram ve kullanıyorsan GitHub profilinde site bağlantısını
@@ -134,6 +137,43 @@ Doğrulama kaynakları:
 - [Sitemap gönderme](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap)
 - [Canonical adresler](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls)
 - [Site adları ve WebSite şeması](https://developers.google.com/search/docs/appearance/site-names)
+- [Vercel alan adı yönlendirmeleri](https://vercel.com/docs/domains/working-with-domains/deploying-and-redirecting)
+
+## 21 Kasım 2026 alan adı yönlendirme düzeltmesi
+
+Canlı HTTP başlıkları kontrol edildiğinde aşağıdaki durum gözlendi:
+
+| İstek | Yanıt |
+| --- | --- |
+| `https://berkekatranci.com/` | `308`, `Location: https://www.berkekatranci.com/` |
+| `https://www.berkekatranci.com/` | `200` |
+| `https://garibanadam.com/` | `308`, hedef `https://www.berkekatranci.com/` |
+| `https://www.garibanadam.com/` | `308`, hedef `https://www.berkekatranci.com/` |
+
+Vercel apex alanını `www` alanına yönlendirirken eski `next.config.mjs` kuralı
+`www.berkekatranci.com` isteklerini yeniden apex alanına gönderiyordu. Bu iki
+katman birlikte `apex → www → apex` döngüsü oluşturuyordu. Vercel deployment
+bağlantısında host adı farklı olduğu için aynı uygulama kuralı devreye girmiyordu.
+Önceki yerel kontrol yalnızca ilk `308` yanıtını doğruladığından bu döngüyü yakalamadı.
+
+Düzeltmede uygulamadaki tüm host tabanlı yönlendirmeler kaldırıldı; alan adı
+seçimi Vercel'e bırakıldı. Üç eski takma ad yolunun ana sayfaya yönlendirmesi
+korundu. Canonical, sitemap ve sosyal adreslerin varsayılanı canlı ana alan olan
+`https://www.berkekatranci.com` ile eşitlendi. Görünür arayüz metinleri değiştirilmedi.
+
+Doğrulamada izole çalışma kopyasının Next.js production build'i geçti.
+Gerçek yerel production sunucusuna karşı SEO audit'i **655 kontrolü başarıyla
+tamamladı**. Bu kontroller farklı host yanıtlarını, eski yol yönlendirmelerini,
+iki sanal Vercel alan adı topolojisinde sonuca ulaşmayı ve eski uygulama
+kuralının döngü oluşturduğunu yakalayan regresyon senaryosunu kapsar. Bunlar
+yerel uygulama doğrulamalarıdır; yukarıdaki tablo ayrıca gözlenen canlı HTTP
+başlıklarını belgeler. Arayüz dosyalarında değişiklik yapılmadığı da doğrulanmıştır.
+
+Bu düzeltme yerel kaynaklarda hazırlandı; yeni sürümün Vercel Production'a
+dağıtılması gerekir. Yukarıdaki yayın adımlarını uygulayıp `SITE_URL` değerini
+kontrol ederek yeniden dağıt. Ardından ana sayfayı, bir proje sayfasını ve eski
+takma ad yollarını her alan adında dene. Tarayıcı eski kalıcı `308` yanıtlarını
+saklamışsa gizli pencerede kontrol et veya ilgili sitenin önbelleğini temizle.
 
 ## SEO doğrulaması
 
@@ -143,5 +183,11 @@ JSON-LD, robots/sitemap, 308 yönlendirme, 404 ve sosyal görsel kontrollerini y
 Ana sayfa ve üç proje sayfasının yanı sıra eski ad yollarının ana sayfaya
 yönlendiğini, SEO takma adlarının görünür içerikte bulunmadığını, Person/WebSite
 ilişkilerini ve sayfa metadata'sının OG/Twitter alanlarıyla tutarlılığını doğrular.
+Kontrol, farklı `Host` başlıklarında uygulamanın alan adı yönlendirmesi eklemediğini
+doğrular. Sanal bir Vercel katmanı ile hem apex → www hem www → apex topolojilerini
+gerçek yerel uygulama yanıtlarıyla izler; eski ters yönlü uygulama kuralının
+eklenmesi durumunda döngünün yakalandığını da bir regresyon senaryosuyla doğrular.
+Her zincirde URL tekrarını ve yönlendirme sayısını sınırlar; yol ve sorgu
+parametrelerinin korunduğunu kontrol eder.
 Farklı bir yerel port için `npm run seo:check -- http://localhost:PORT` kullan.
 Bu kontrol localhost üzerinde çalışır; DNS ve canlı Vercel ayarlarını doğrulamaz.

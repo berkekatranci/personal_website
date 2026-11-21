@@ -4,7 +4,7 @@ import { socials } from "@/data/profile";
 const configuredOrigin =
   process.env.SITE_URL ||
   process.env.NEXT_PUBLIC_SITE_URL ||
-  "https://berkekatranci.com";
+  "https://www.berkekatranci.com";
 
 function normalizeOrigin(value: string): string {
   const url = new URL(value.trim());
@@ -23,7 +23,8 @@ function normalizeOrigin(value: string): string {
   return url.origin;
 }
 
-// One public origin keeps the name and alias domains on the same canonical URLs.
+// Follow the production origin served by Vercel. This controls SEO URLs only;
+// HTTP domain redirects are configured in Vercel Domains, not in application code.
 export const siteOrigin = normalizeOrigin(configuredOrigin);
 export const siteIsConfigured = true;
 export const isIndexableDeployment =

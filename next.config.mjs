@@ -4,19 +4,9 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"]
   },
   async redirects() {
+    // Vercel Domains owns host canonicalization. Duplicating www/apex rules
+    // here can send requests back against Vercel's redirect and create a loop.
     return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "(?:www\\.)?garibanadam\\.com" }],
-        destination: "https://berkekatranci.com/:path*",
-        permanent: true
-      },
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "www\\.berkekatranci\\.com" }],
-        destination: "https://berkekatranci.com/:path*",
-        permanent: true
-      },
       { source: "/gariban-adam", destination: "/", permanent: true },
       { source: "/garibanadam", destination: "/", permanent: true },
       { source: "/gariban_adam", destination: "/", permanent: true }
